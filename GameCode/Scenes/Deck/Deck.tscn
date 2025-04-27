@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://omv0nese4ntl"]
+
+[ext_resource type="Script" uid="uid://cdf4ucw65geov" path="res://Scenes/Deck/Deck.cs" id="1_f0moa"]
+[ext_resource type="PackedScene" uid="uid://i7jtp4jc2xdk" path="res://Scenes/Card/Card.tscn" id="2_o02qa"]
+
+[node name="Deck" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_f0moa")
+cardScene = ExtResource("2_o02qa")

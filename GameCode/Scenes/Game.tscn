@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6f20t3dpqog2"]
+
+[ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="2_gl6un"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Table" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(5.6313e-06, 0.624757, 0, 1)
+
+[node name="TableCenter" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 549.0
+offset_top = 385.0
+offset_right = -549.0
+offset_bottom = -385.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Dealer" parent="TableCenter" node_paths=PackedStringArray("communityCardsContianer") instance=ExtResource("2_gl6un")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+communityCardsContianer = NodePath("../CommunityCards")
+
+[node name="CommunityCards" type="HBoxContainer" parent="TableCenter"]
+layout_mode = 2
+size_flags_horizontal = 3
