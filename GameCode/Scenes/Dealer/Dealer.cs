@@ -7,15 +7,15 @@ public partial class Dealer : Control
 
 	private Deck deck = null!;
 
-    	public override void _Ready()
-    	{
-       		deck = deckScene.Instantiate<Deck>();
+		public override void _Ready()
+		{
+	   		deck = deckScene.Instantiate<Deck>();
 		AddChild(deck);
 
 		for(int i = 0; i < 5; i ++)
 			DealToCommunityCards();
 
-    	}
+		}
 
 	public void DealToCommunityCards() {
 		var card = deck.GetChild<Card>(0);

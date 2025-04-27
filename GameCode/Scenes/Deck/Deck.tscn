@@ -4,7 +4,18 @@
 [ext_resource type="PackedScene" uid="uid://i7jtp4jc2xdk" path="res://Scenes/Card/Card.tscn" id="2_o02qa"]
 
 [node name="Deck" type="Control"]
+custom_minimum_size = Vector2(510.283, 726)
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 704.859
+offset_top = 177.0
+offset_right = -704.859
+offset_bottom = -177.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_f0moa")
 cardScene = ExtResource("2_o02qa")
