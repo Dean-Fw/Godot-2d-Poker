@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://i7jtp4jc2xdk"]
+[gd_scene load_steps=2 format=3 uid="uid://i7jtp4jc2xdk"]
 
 [ext_resource type="Script" uid="uid://d4nci5wvnxesx" path="res://Scenes/Card/Card.cs" id="2_2cp05"]
-[ext_resource type="Texture2D" uid="uid://botvo5y106vk8" path="res://Assets/PlayingCards/card_back.png" id="2_v6t3l"]
 
 [node name="Texture" type="TextureRect"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1409.72
-offset_bottom = -354.0
-texture = ExtResource("2_v6t3l")
+anchors_preset = -1
+anchor_right = 0.266
+anchor_bottom = 0.672
+offset_right = -0.439972
+offset_bottom = 0.239929
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 3
 script = ExtResource("2_2cp05")

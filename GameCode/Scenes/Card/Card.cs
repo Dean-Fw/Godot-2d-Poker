@@ -11,7 +11,7 @@ public partial class Card : TextureRect
 
 	public override void _Ready() {
 		// Sets card Texture to card back
-		this.Texture = GD.Load<Texture2D>(Path.Join(PATH_TO_CARD_ASSESTS, PATH_TO_CARD_BACK));
+		//this.Texture = GD.Load<Texture2D>(Path.Join(PATH_TO_CARD_ASSESTS, PATH_TO_CARD_BACK));
 	}
 
 	public void FlipCard(){
