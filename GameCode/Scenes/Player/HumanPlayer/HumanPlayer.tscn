@@ -32,6 +32,7 @@ custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 
 [node name="Hand" type="HBoxContainer" parent="VBoxContainer/InformationMargin/Information"]
+custom_minimum_size = Vector2(385, 0)
 layout_mode = 2
 
 [node name="ChipsMargin" type="MarginContainer" parent="VBoxContainer/InformationMargin/Information"]
