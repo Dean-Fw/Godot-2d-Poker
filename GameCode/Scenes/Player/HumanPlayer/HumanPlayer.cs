@@ -9,6 +9,6 @@ public partial class HumanPlayer : Player
 	}
     
 	public void HandlePress() {
-		this.MoveNext();
+		MoveNext();
 	}
 }

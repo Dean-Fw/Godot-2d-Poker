@@ -11,13 +11,13 @@ public partial class Card : TextureRect
 
 	public override void _Ready() {
 		// Sets card Texture to card back
-		//this.Texture = GD.Load<Texture2D>(Path.Join(PATH_TO_CARD_ASSESTS, PATH_TO_CARD_BACK));
+		Texture = GD.Load<Texture2D>(Path.Join(PATH_TO_CARD_ASSESTS, PATH_TO_CARD_BACK));
 	}
 
 	public void FlipCard(){
 			switch(Value) {
 				case 1:
-					this.Texture = GD.Load<Texture2D>(
+					Texture = GD.Load<Texture2D>(
 						GetTexturePath(
 							"ace", 
 							Suit.ToString().ToLower()
@@ -25,7 +25,7 @@ public partial class Card : TextureRect
 					);
 					break;
 				case 11:
-					this.Texture = GD.Load<Texture2D>(
+					Texture = GD.Load<Texture2D>(
 						GetTexturePath(
 							"jack", 
 							Suit.ToString().ToLower()
@@ -33,7 +33,7 @@ public partial class Card : TextureRect
 					);
 					break;
 				case 12: 
-					this.Texture = GD.Load<Texture2D>(
+					Texture = GD.Load<Texture2D>(
 						GetTexturePath(
 							"queen", 
 							Suit.ToString().ToLower()
@@ -41,7 +41,7 @@ public partial class Card : TextureRect
 					);
 					break;
 				case 13: 
-					this.Texture = GD.Load<Texture2D>(
+					Texture = GD.Load<Texture2D>(
 						GetTexturePath(
 							"king", 
 							Suit.ToString().ToLower()
@@ -50,7 +50,7 @@ public partial class Card : TextureRect
 
 					break;
 				default:
-					this.Texture = GD.Load<Texture2D>(
+					Texture = GD.Load<Texture2D>(
 						GetTexturePath(
 							Value.ToString(), 
 							Suit.ToString().ToLower()
