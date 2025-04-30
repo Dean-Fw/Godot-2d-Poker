@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4yif41brjlrw"]
+
+[ext_resource type="Script" uid="uid://bahtehrdield" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.cs" id="1_uuaa5"]
+[ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_otmmc"]
+
+[node name="ComputerPlayer" type="PanelContainer" node_paths=PackedStringArray("HandContainer")]
+anchors_preset = -1
+anchor_right = 0.337
+anchor_bottom = 0.297
+offset_right = 0.959961
+offset_bottom = 0.23999
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_uuaa5")
+HandContainer = NodePath("InformationMargin/Information/Hand")
+
+[node name="InformationMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Information" type="HBoxContainer" parent="InformationMargin"]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 2
+
+[node name="Hand" type="HBoxContainer" parent="InformationMargin/Information"]
+custom_minimum_size = Vector2(385, 0)
+layout_mode = 2
+
+[node name="ChipsMargin" type="MarginContainer" parent="InformationMargin/Information"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Chips" type="VBoxContainer" parent="InformationMargin/Information/ChipsMargin"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="InformationMargin/Information/ChipsMargin/Chips"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+texture = ExtResource("2_otmmc")
+expand_mode = 1
+
+[node name="ChipCount" type="Label" parent="InformationMargin/Information/ChipsMargin/Chips"]
+layout_mode = 2
+text = "Chips: 100"
+horizontal_alignment = 1
+vertical_alignment = 1

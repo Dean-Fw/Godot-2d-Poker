@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ckidki47ew6uo" path="res://Scenes/Player/HumanPlayer/HumanPlayer.cs" id="1_ovyus"]
 [ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_ft8w5"]
 
-[node name="HumanPlayer" type="PanelContainer" node_paths=PackedStringArray("NextButton", "HandContainer")]
+[node name="HumanPlayer" type="PanelContainer" node_paths=PackedStringArray("nextButton", "HandContainer")]
 anchors_preset = -1
 anchor_right = 0.337
 anchor_bottom = 0.297
@@ -14,7 +14,7 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_ovyus")
-NextButton = NodePath("VBoxContainer/Button")
+nextButton = NodePath("VBoxContainer/Button")
 HandContainer = NodePath("VBoxContainer/InformationMargin/Information/Hand")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
