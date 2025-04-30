@@ -2,13 +2,23 @@ using Godot;
 
 public partial class HumanPlayer : Player
 {
-	[Export] private Button NextButton;
+	[Export] private Button nextButton;
 
 	public override void _Ready() {
-		NextButton.ButtonDown += () => HandlePress();
+		nextButton.ButtonDown += () => HandlePress();
 	}
-    
-	public void HandlePress() {
+
+   	public override void StartTurn() {
+		GD.Print("Player Start");
+		nextButton.Disabled = false;
+	}
+
+	private void HandlePress() {
+		nextButton.Disabled = true;
 		MoveNext();
+	}
+
+	private void ToggleButtonActive() {
+		nextButton.Disabled = !nextButton.Disabled;	
 	}
 }

@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dr7ig44fvex7x"]
+[gd_scene load_steps=6 format=3 uid="uid://b6f20t3dpqog2"]
 
-[ext_resource type="Script" path="res://Scenes/RoundManager.cs" id="1_kldst"]
+[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/RoundManager.cs" id="1_kldst"]
 [ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="2_gl6un"]
 [ext_resource type="PackedScene" uid="uid://cd6dmqn4vash3" path="res://Scenes/Player/HumanPlayer/HumanPlayer.tscn" id="2_j5yw3"]
-[ext_resource type="Script" path="res://Scenes/PlayerParent.cs" id="3_b2bpf"]
+[ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/PlayerParent.cs" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://c4yif41brjlrw" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.tscn" id="3_j5yw3"]
 
 [node name="Game" type="Control"]

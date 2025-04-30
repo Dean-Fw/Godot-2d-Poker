@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bahtehrdield" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.cs" id="1_uuaa5"]
 [ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_otmmc"]
 
-[node name="ComputerPlayer" type="PanelContainer"]
+[node name="ComputerPlayer" type="PanelContainer" node_paths=PackedStringArray("HandContainer")]
 anchors_preset = -1
 anchor_right = 0.337
 anchor_bottom = 0.297
@@ -14,6 +14,7 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_uuaa5")
+HandContainer = NodePath("InformationMargin/Information/Hand")
 
 [node name="InformationMargin" type="MarginContainer" parent="."]
 layout_mode = 2
