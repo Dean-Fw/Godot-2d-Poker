@@ -10,7 +10,6 @@ public partial class RoundManager : Node
 	private List<Player> players = [];
 
 	public override void _Ready() {
-		GD.Print(playersParent);
 		players = playersParent.GetPlayers();
 
 		StartPlayerTurn(players[0]);
@@ -42,5 +41,6 @@ public partial class RoundManager : Node
 		// start the turn of the next player
 		StartPlayerTurn(players[playerIndex + 1]);
 	}
+
 
 }
