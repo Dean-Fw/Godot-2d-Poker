@@ -4,18 +4,24 @@ using System.Linq;
 
 public partial class PlayerParent : Control
 {
-	public override void _Ready() {
-		GiveInitialChips(100); // Don't think this is a SOLID way to do this, Round Manager is now responsible for initalising players...
-	}
+	[Signal] public delegate void PlayersReadyEventHandler();
 
-	public List<Player> GetPlayers() {
-		return GetChildren()
+	public List<Player> Players {get; private set;}
+
+	public override void _Ready() {
+		Players = GetChildren()
 			.OfType<Player>()
 			.ToList();
+
+		GD.Print(Players.Count);
+
+		GiveInitialChips(100); 	
+
+		EmitSignal(SignalName.PlayersReady);
 	}
 
 	private void GiveInitialChips(int value) {
-		foreach(var player in GetPlayers()) 
+		foreach(var player in Players) 
 			player.ChipCount = value;
 	}
 }

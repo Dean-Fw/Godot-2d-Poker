@@ -9,7 +9,11 @@ public partial class PotManager : Node {
 	public Pot Pot {get; private set;} = null!;
 
 	public override void _Ready() {
-		foreach(var player in playerParent.GetPlayers())
+		playerParent.PlayersReady += () => HandlePlayersReady();
+	}
+
+	private void HandlePlayersReady() {
+		foreach(var player in playerParent.Players)
 			player.Bet += HandleBet;
 	}
 

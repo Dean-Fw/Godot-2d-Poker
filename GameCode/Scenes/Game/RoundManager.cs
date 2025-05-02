@@ -1,5 +1,4 @@
 using Godot;
-using System.Collections.Generic;
 
 public partial class RoundManager : Node
 {
@@ -7,12 +6,13 @@ public partial class RoundManager : Node
 
 	[Signal] public delegate void TurnStartEventHandler();
 
-	private List<Player> players = [];
 
 	public override void _Ready() {
-		players = playersParent.GetPlayers();
+		playersParent.PlayersReady += () => HandlePlayersReady();
+	}
 
-		StartPlayerTurn(players[0]);
+	private void HandlePlayersReady() {
+		StartPlayerTurn(playersParent.Players[0]);
 	}
 
 	private void StartPlayerTurn(Player player) {
@@ -30,16 +30,16 @@ public partial class RoundManager : Node
 		//Pick the next player
 		
 		// What position is th current player in
-		var playerIndex = players.IndexOf(player);
+		var playerIndex = playersParent.Players.IndexOf(player);
 
 		// if the next player is outside the list pick the first player
-		if(playerIndex + 1 == players.Count) {
-			StartPlayerTurn(players[0]);
+		if(playerIndex + 1 == playersParent.Players.Count) {
+			StartPlayerTurn(playersParent.Players[0]);
 			return;
 		} 
 
 		// start the turn of the next player
-		StartPlayerTurn(players[playerIndex + 1]);
+		StartPlayerTurn(playersParent.Players[playerIndex + 1]);
 	}
 
 

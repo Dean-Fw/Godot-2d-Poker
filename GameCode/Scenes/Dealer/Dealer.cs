@@ -4,7 +4,7 @@ public partial class Dealer : Control
 {
 	[Export] private PackedScene deckScene;
 	[Export] private HBoxContainer communityCardsContianer;
-	[Export] private Node PlayersParent;
+	[Export] private PlayerParent PlayersParent;
 
 	private Deck deck = null!;
 
@@ -12,11 +12,7 @@ public partial class Dealer : Control
 		deck = deckScene.Instantiate<Deck>();
 		AddChild(deck);
 
-		// get all players from the players node and listen to their trun end signal
-		foreach (var child in PlayersParent.GetChildren()) {
-			if (child is Player player)
-				player.TurnEnd += DealToPlayer;
-		}
+		PlayersParent.PlayersReady += () => HandlePlayersReady();
 	}
 
 	public void DealToCommunityCards() {
@@ -29,6 +25,13 @@ public partial class Dealer : Control
 		player.HandContainer.AddChild(
 			GetCard()
 		);
+	}
+
+	private void HandlePlayersReady() {
+		// get all players from the players node and listen to their trun end signal
+		foreach (var player in PlayersParent.Players) {
+				player.TurnEnd += DealToPlayer;
+		}
 	}
 
 	private Card GetCard() {
