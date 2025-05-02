@@ -15,6 +15,7 @@ public partial class HumanPlayer : Player
 
 	private void HandlePress() {
 		nextButton.Disabled = true;
+		MakeBet(10);
 		MoveNext();
 	}
 

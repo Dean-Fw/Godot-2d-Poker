@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6f20t3dpqog2"]
+[gd_scene load_steps=8 format=3 uid="uid://b6f20t3dpqog2"]
 
-[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/RoundManager.cs" id="1_kldst"]
+[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/Game/RoundManager.cs" id="1_kldst"]
+[ext_resource type="Script" uid="uid://lte4ggmwai5k" path="res://Scenes/Game/PotManager.cs" id="2_3k6gv"]
 [ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="2_gl6un"]
 [ext_resource type="PackedScene" uid="uid://cd6dmqn4vash3" path="res://Scenes/Player/HumanPlayer/HumanPlayer.tscn" id="2_j5yw3"]
-[ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/PlayerParent.cs" id="3_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://cv8gtyr6520y3" path="res://Scenes/Pot/Pot.tscn" id="3_1q8bt"]
+[ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/Game/PlayerParent.cs" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://c4yif41brjlrw" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.tscn" id="3_j5yw3"]
 
 [node name="Game" type="Control"]
@@ -17,6 +19,12 @@ grow_vertical = 2
 [node name="RoundManager" type="Node" parent="." node_paths=PackedStringArray("playersParent")]
 script = ExtResource("1_kldst")
 playersParent = NodePath("../Table/PlayerParent")
+
+[node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "playerParent")]
+script = ExtResource("2_3k6gv")
+tableCenter = NodePath("../Table/TableCenter")
+potScene = ExtResource("3_1q8bt")
+playerParent = NodePath("../Table/PlayerParent")
 
 [node name="Dealer" parent="." node_paths=PackedStringArray("communityCardsContianer", "PlayersParent") instance=ExtResource("2_gl6un")]
 visible = false
@@ -76,9 +84,9 @@ grow_vertical = 2
 
 [node name="ComputerPlayer" parent="Table/PlayerParent" instance=ExtResource("3_j5yw3")]
 layout_mode = 1
-offset_left = 1061.0
-offset_top = 657.0
-offset_right = 1676.52
-offset_bottom = 912.12
+offset_left = 71.0
+offset_top = 74.0
+offset_right = 686.52
+offset_bottom = 329.12
 grow_horizontal = 1
 grow_vertical = 1

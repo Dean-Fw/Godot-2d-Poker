@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dr7ig44fvex7x"]
+[gd_scene load_steps=8 format=3 uid="uid://d1gqb27cqu15r"]
 
-[ext_resource type="Script" path="res://Scenes/RoundManager.cs" id="1_kldst"]
+[ext_resource type="Script" uid="uid://lte4ggmwai5k" path="res://Scenes/Game/PotManager.cs" id="1_7lihs"]
+[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/Game/RoundManager.cs" id="1_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://cv8gtyr6520y3" path="res://Scenes/Pot/Pot.tscn" id="2_fgofq"]
 [ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="2_gl6un"]
 [ext_resource type="PackedScene" uid="uid://cd6dmqn4vash3" path="res://Scenes/Player/HumanPlayer/HumanPlayer.tscn" id="2_j5yw3"]
-[ext_resource type="Script" path="res://Scenes/PlayerParent.cs" id="3_b2bpf"]
+[ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/Game/PlayerParent.cs" id="3_7lihs"]
 [ext_resource type="PackedScene" uid="uid://c4yif41brjlrw" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.tscn" id="3_j5yw3"]
 
 [node name="Game" type="Control"]
@@ -14,8 +16,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "playerParent")]
+script = ExtResource("1_7lihs")
+tableCenter = NodePath("../Table/TableCenter")
+potScene = ExtResource("2_fgofq")
+playerParent = NodePath("../Table/PlayerParent")
+
 [node name="RoundManager" type="Node" parent="." node_paths=PackedStringArray("playersParent")]
-script = ExtResource("1_kldst")
+script = ExtResource("1_b2bpf")
 playersParent = NodePath("../Table/PlayerParent")
 
 [node name="Dealer" parent="." node_paths=PackedStringArray("communityCardsContianer", "PlayersParent") instance=ExtResource("2_gl6un")]
@@ -61,24 +69,24 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("3_b2bpf")
+script = ExtResource("3_7lihs")
 
 [node name="HumanPlayer" parent="Table/PlayerParent" instance=ExtResource("2_j5yw3")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 108.0
-offset_top = 648.0
-offset_right = 716.0
-offset_bottom = 929.0
+offset_left = 84.0
+offset_top = 690.0
+offset_right = 692.0
+offset_bottom = 971.0
 grow_vertical = 2
 
 [node name="ComputerPlayer" parent="Table/PlayerParent" instance=ExtResource("3_j5yw3")]
 layout_mode = 1
-offset_left = 1061.0
-offset_top = 657.0
-offset_right = 1676.52
-offset_bottom = 912.12
+offset_left = 1144.0
+offset_top = 711.0
+offset_right = 1759.52
+offset_bottom = 966.12
 grow_horizontal = 1
 grow_vertical = 1
