@@ -2,50 +2,55 @@ using Godot;
 
 public partial class RoundManager : Node
 {
-	[Export] private PlayerParent playersParent;
-	[Export] private BlindsManager blindsManager;
+    [Export] private PlayerParent playersParent;
+    [Export] private BlindsManager blindsManager;
 
-	[Signal] public delegate void TurnStartEventHandler();
-	[Signal] public delegate void RoundStartEventHandler(int playerCount);
+    [Signal] public delegate void TurnStartEventHandler();
+    [Signal] public delegate void RoundStartEventHandler(int playerCount);
 
-	public override void _Ready() {
-		playersParent.PlayersReady += () => HandlePlayersReady();
-	}
+    public override void _Ready()
+    {
+        playersParent.PlayersReady += () => HandlePlayersReady();
+    }
 
-	private void HandlePlayersReady() {
-		EmitSignal(SignalName.RoundStart, playersParent.Players.Count);
+    private void HandlePlayersReady()
+    {
+        EmitSignal(SignalName.RoundStart, playersParent.Players.Count);
 
-		StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
-		GD.Print($"Index of Dealer: {blindsManager.Blinds.Dealer}");
-		GD.Print($"Index of Small B: {blindsManager.Blinds.SmallBlind}");
-		GD.Print($"Index of Big B: {blindsManager.Blinds.BigBlind}");
-		GD.Print($"Index Of UnderTheGun: {blindsManager.Blinds.UnderTheGun}");
-	}
+        StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
+        GD.Print($"Index of Dealer: {blindsManager.Blinds.Dealer}");
+        GD.Print($"Index of Small B: {blindsManager.Blinds.SmallBlind}");
+        GD.Print($"Index of Big B: {blindsManager.Blinds.BigBlind}");
+        GD.Print($"Index Of UnderTheGun: {blindsManager.Blinds.UnderTheGun}");
+    }
 
-	private void StartPlayerTurn(Player player) {
-		// Listen for when this player has finished their turn
-		player.TurnEnd += HandleTurnEnd;
-		
-		// Tell them to begin their turn
-		player.StartTurn();
-	}
+    private void StartPlayerTurn(Player player)
+    {
+        // Listen for when this player has finished their turn
+        player.TurnEnd += HandleTurnEnd;
 
-	private void HandleTurnEnd(Player player) {
-		// Stop Listening to THIS player about them finishing their turn
-		player.TurnEnd -= HandleTurnEnd;
+        // Tell them to begin their turn
+        player.StartTurn();
+    }
 
-		//Pick the next player
-		
-		// What position is th current player in
-		var playerIndex = playersParent.Players.IndexOf(player);
+    private void HandleTurnEnd(Player player)
+    {
+        // Stop Listening to THIS player about them finishing their turn
+        player.TurnEnd -= HandleTurnEnd;
 
-		// if the next player is outside the list pick the first player
-		if(playerIndex + 1 == playersParent.Players.Count) {
-			StartPlayerTurn(playersParent.Players[0]);
-			return;
-		} 
+        //Pick the next player
 
-		// start the turn of the next player
-		StartPlayerTurn(playersParent.Players[playerIndex + 1]);
-	}
+        // What position is th current player in
+        var playerIndex = playersParent.Players.IndexOf(player);
+
+        // if the next player is outside the list pick the first player
+        if (playerIndex + 1 == playersParent.Players.Count)
+        {
+            StartPlayerTurn(playersParent.Players[0]);
+            return;
+        }
+
+        // start the turn of the next player
+        StartPlayerTurn(playersParent.Players[playerIndex + 1]);
+    }
 }

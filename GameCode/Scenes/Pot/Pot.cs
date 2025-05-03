@@ -2,14 +2,15 @@ using Godot;
 
 public partial class Pot : Control
 {
-	[Export] private Label ChipCount;
+    [Export] private Label ChipCount;
 
-	private int size;
+    private int size;
 
-	public int PotValue {get; private set;}
+    public int PotValue { get; private set; }
 
-	public void AddChips(int value) {
-		size += value;
-		ChipCount.Text = size.ToString();
-	}
+    public void AddChips(int value)
+    {
+        size += value;
+        ChipCount.Text = size.ToString();
+    }
 }

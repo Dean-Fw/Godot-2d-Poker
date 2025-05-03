@@ -2,46 +2,52 @@ using Godot;
 
 public partial class Dealer : Control
 {
-	[Export] private PackedScene deckScene;
-	[Export] private HBoxContainer communityCardsContianer;
-	[Export] private PlayerParent PlayersParent;
+    [Export] private PackedScene deckScene;
+    [Export] private HBoxContainer communityCardsContianer;
+    [Export] private PlayerParent PlayersParent;
 
-	private Deck deck = null!;
+    private Deck deck = null!;
 
-	public override void _Ready() {
-		deck = deckScene.Instantiate<Deck>();
-		AddChild(deck);
+    public override void _Ready()
+    {
+        deck = deckScene.Instantiate<Deck>();
+        AddChild(deck);
 
-		PlayersParent.PlayersReady += () => HandlePlayersReady();
-	}
+        PlayersParent.PlayersReady += () => HandlePlayersReady();
+    }
 
-	public void DealToCommunityCards() {
-		communityCardsContianer.AddChild(
-			GetCard()
-		);
-	}
+    public void DealToCommunityCards()
+    {
+        communityCardsContianer.AddChild(
+            GetCard()
+        );
+    }
 
-	public void DealToPlayer(Player player) {
-		player.HandContainer.AddChild(
-			GetCard()
-		);
-	}
+    public void DealToPlayer(Player player)
+    {
+        player.HandContainer.AddChild(
+            GetCard()
+        );
+    }
 
-	private void HandlePlayersReady() {
-		// get all players from the players node and listen to their trun end signal
-		foreach (var player in PlayersParent.Players) {
-				player.TurnEnd += DealToPlayer;
-		}
-	}
+    private void HandlePlayersReady()
+    {
+        // get all players from the players node and listen to their trun end signal
+        foreach (var player in PlayersParent.Players)
+        {
+            player.TurnEnd += DealToPlayer;
+        }
+    }
 
-	private Card GetCard() {
-		var card = deck.GetChild<Card>(0);
-		deck.RemoveChild(card);
+    private Card GetCard()
+    {
+        var card = deck.GetChild<Card>(0);
+        deck.RemoveChild(card);
 
-		card.FlipCard();
+        card.FlipCard();
 
-		return card;
-	}
+        return card;
+    }
 
 
 }
