@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4yif41brjlrw"]
+[gd_scene load_steps=4 format=3 uid="uid://c4yif41brjlrw"]
 
 [ext_resource type="Script" uid="uid://bahtehrdield" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.cs" id="1_uuaa5"]
+[ext_resource type="PackedScene" uid="uid://cv8gtyr6520y3" path="res://Scenes/Pot/Pot.tscn" id="2_enadg"]
 [ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_otmmc"]
 
 [node name="ComputerPlayer" type="PanelContainer" node_paths=PackedStringArray("HandContainer", "chipCounter")]
@@ -16,6 +17,7 @@ size_flags_vertical = 4
 script = ExtResource("1_uuaa5")
 HandContainer = NodePath("InformationMargin/Information/Hand")
 chipCounter = NodePath("InformationMargin/Information/ChipsMargin/Chips/ChipCount")
+pot = ExtResource("2_enadg")
 
 [node name="InformationMargin" type="MarginContainer" parent="."]
 layout_mode = 2

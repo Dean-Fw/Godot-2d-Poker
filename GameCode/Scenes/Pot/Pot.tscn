@@ -19,8 +19,10 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 texture = ExtResource("2_60v3t")
+expand_mode = 1
 
 [node name="ChipCount" type="Label" parent="VBoxContainer"]
 layout_mode = 2

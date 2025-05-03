@@ -1,25 +1,35 @@
 using Godot;
+using System.Linq;
 
 public partial class HumanPlayer : Player
 {
-	[Export] private Button nextButton;
+    [Export] private Button nextButton;
 
-	public override void _Ready() {
-		nextButton.ButtonDown += () => HandlePress();
-	}
+    private bool cardsFlipped = false;
 
-   	public override void StartTurn() {
-		GD.Print("Player Start");
-		nextButton.Disabled = false;
-	}
+    public override void _Ready()
+    {
+        nextButton.ButtonDown += () => HandlePress();
+    }
 
-	private void HandlePress() {
-		nextButton.Disabled = true;
-		MakeBet(10);
-		MoveNext();
-	}
+    public override void StartTurn()
+    {
+        if (!cardsFlipped)
+        {
+            foreach (var card in HandContainer.GetChildren().OfType<Card>())
+            {
+                card.FlipCard();
+            }
+            cardsFlipped = true;
+        }
 
-	private void ToggleButtonActive() {
-		nextButton.Disabled = !nextButton.Disabled;	
-	}
+        GD.Print("Player Start");
+        nextButton.Disabled = false;
+    }
+
+    private void HandlePress()
+    {
+        nextButton.Disabled = true;
+        MakeBet(10);
+    }
 }

@@ -2,46 +2,74 @@ using Godot;
 
 public partial class Dealer : Control
 {
-	[Export] private PackedScene deckScene;
-	[Export] private HBoxContainer communityCardsContianer;
-	[Export] private PlayerParent PlayersParent;
+    [Export] private PackedScene deckScene;
+    [Export] private HBoxContainer communityCardsContianer;
+    [Export] private PlayerParent playersParent;
+    [Export] private RoundManager roundManager;
 
-	private Deck deck = null!;
+    private Deck deck = null!;
 
-	public override void _Ready() {
-		deck = deckScene.Instantiate<Deck>();
-		AddChild(deck);
+    public override void _Ready()
+    {
+        deck = deckScene.Instantiate<Deck>();
+        AddChild(deck);
 
-		PlayersParent.PlayersReady += () => HandlePlayersReady();
-	}
+        playersParent.PlayersReady += () => HandlePlayersReady();
 
-	public void DealToCommunityCards() {
-		communityCardsContianer.AddChild(
-			GetCard()
-		);
-	}
+        roundManager.RoundEnd += HandleRoundEnd;
+    }
 
-	public void DealToPlayer(Player player) {
-		player.HandContainer.AddChild(
-			GetCard()
-		);
-	}
+    public void DealToCommunityCards(int cardsToDeal)
+    {
+        for (int cardsDealt = 0; cardsDealt < cardsToDeal; cardsDealt++)
+        {
+            var card = GetCard();
+            card.FlipCard();
 
-	private void HandlePlayersReady() {
-		// get all players from the players node and listen to their trun end signal
-		foreach (var player in PlayersParent.Players) {
-				player.TurnEnd += DealToPlayer;
-		}
-	}
+            communityCardsContianer.AddChild(
+                card
+            );
+        }
+    }
 
-	private Card GetCard() {
-		var card = deck.GetChild<Card>(0);
-		deck.RemoveChild(card);
+    public void DealHandToPlayer(Player player)
+    {
+        player.HandContainer.AddChild(
+                GetCard()
+        );
 
-		card.FlipCard();
+        player.HandContainer.AddChild(
+                GetCard()
+        );
+    }
 
-		return card;
-	}
+    private void HandlePlayersReady()
+    {
+        // get all players from the players node and listen to their trun end signal
+        foreach (var player in playersParent.Players)
+        {
+            DealHandToPlayer(player);
+        }
+    }
+
+    private void HandleRoundEnd(RoundPhase nextRoundPhase)
+    {
+        if (nextRoundPhase == RoundPhase.Flop)
+        {
+            DealToCommunityCards(3);
+            return;
+        }
+
+        DealToCommunityCards(1);
+    }
+
+    private Card GetCard()
+    {
+        var card = deck.GetChild<Card>(0);
+        deck.RemoveChild(card);
+
+        return card;
+    }
 
 
 }

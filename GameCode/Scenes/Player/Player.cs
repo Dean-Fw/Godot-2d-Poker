@@ -2,36 +2,47 @@ using Godot;
 
 public partial class Player : Node
 {
-	[Export] public HBoxContainer HandContainer;
+    [Export] public HBoxContainer HandContainer;
 
-	[Export] private Label chipCounter;
-	[Export] private PackedScene pot;
+    [Export] private Label chipCounter;
+    [Export] private PackedScene pot;
 
-	[Signal] public delegate void TurnEndEventHandler(Player player); 
-	[Signal] public delegate void BetEventHandler(int value);
+    [Signal] public delegate void TurnEndEventHandler(Player player);
+    [Signal] public delegate void BetEventHandler(int value);
 
-	public int ChipCount {get; set;}
+    public int ChipCount { get; set; }
+    public int CurrentBet { get; set; }
 
-	public override void _Ready() {
-		chipCounter.Text = $"Chips: {ChipCount}";	
-	}
+    public override void _Ready()
+    {
+        chipCounter.Text = $"Chips: {ChipCount}";
+    }
 
-	public virtual void StartTurn() {
-	}
+    public void SetChipCount(int value)
+    {
+        ChipCount = value;
+        chipCounter.Text = $"Chips: {ChipCount}";
+    }
 
-	// Signal to end this players turn	
-	protected void MoveNext() {
-		EmitSignal(SignalName.TurnEnd, this);
-	}
+    public virtual void StartTurn()
+    {
+    }
 
-	protected void MakeBet(int value) {
-		SetChipCount(ChipCount - value);
-		chipCounter.Text = $"Chips: {ChipCount}";
+    // Signal to end this players turn	
+    protected void MoveNext()
+    {
+        EmitSignal(SignalName.TurnEnd, this);
+    }
 
-		EmitSignal(SignalName.Bet, value);
-	}
+    protected void MakeBet(int value)
+    {
+        // Set players current bet to the bet value
+        CurrentBet += value;
+        SetChipCount(ChipCount - value);
 
-	private void SetChipCount(int value) {
-		ChipCount = value;
-	}
+        // Signal a bet has been made
+        EmitSignal(SignalName.Bet, value);
+        MoveNext();
+    }
+
 }
