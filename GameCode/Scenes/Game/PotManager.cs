@@ -23,7 +23,6 @@ public partial class PotManager : Node {
 			tableCenter.AddChild(Pot);
 
 		Pot.AddChips(value);
-		
 	}
 
 }

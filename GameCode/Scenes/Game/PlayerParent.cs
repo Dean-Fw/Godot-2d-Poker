@@ -22,6 +22,6 @@ public partial class PlayerParent : Control
 
 	private void GiveInitialChips(int value) {
 		foreach(var player in Players) 
-			player.ChipCount = value;
+			player.SetChipCount(value);
 	}
 }

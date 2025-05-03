@@ -16,6 +16,11 @@ public partial class Player : Node
 		chipCounter.Text = $"Chips: {ChipCount}";	
 	}
 
+	public void SetChipCount(int value) {
+		ChipCount = value;
+		chipCounter.Text = $"Chips: {ChipCount}";
+	}
+
 	public virtual void StartTurn() {
 	}
 
@@ -26,12 +31,8 @@ public partial class Player : Node
 
 	protected void MakeBet(int value) {
 		SetChipCount(ChipCount - value);
-		chipCounter.Text = $"Chips: {ChipCount}";
 
 		EmitSignal(SignalName.Bet, value);
 	}
 
-	private void SetChipCount(int value) {
-		ChipCount = value;
-	}
 }

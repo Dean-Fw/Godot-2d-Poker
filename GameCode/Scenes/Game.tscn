@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/Game/PlayerParent.cs" id="3_7lihs"]
 [ext_resource type="PackedScene" uid="uid://c4yif41brjlrw" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.tscn" id="3_j5yw3"]
 
-[node name="Game" type="Control"]
+[node name="Game2" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

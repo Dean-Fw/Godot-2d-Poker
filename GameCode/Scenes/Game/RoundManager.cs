@@ -3,16 +3,23 @@ using Godot;
 public partial class RoundManager : Node
 {
 	[Export] private PlayerParent playersParent;
+	[Export] private BlindsManager blindsManager;
 
 	[Signal] public delegate void TurnStartEventHandler();
-
+	[Signal] public delegate void RoundStartEventHandler(int playerCount);
 
 	public override void _Ready() {
 		playersParent.PlayersReady += () => HandlePlayersReady();
 	}
 
 	private void HandlePlayersReady() {
-		StartPlayerTurn(playersParent.Players[0]);
+		EmitSignal(SignalName.RoundStart, playersParent.Players.Count);
+
+		StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
+		GD.Print($"Index of Dealer: {blindsManager.Blinds.Dealer}");
+		GD.Print($"Index of Small B: {blindsManager.Blinds.SmallBlind}");
+		GD.Print($"Index of Big B: {blindsManager.Blinds.BigBlind}");
+		GD.Print($"Index Of UnderTheGun: {blindsManager.Blinds.UnderTheGun}");
 	}
 
 	private void StartPlayerTurn(Player player) {
@@ -41,6 +48,4 @@ public partial class RoundManager : Node
 		// start the turn of the next player
 		StartPlayerTurn(playersParent.Players[playerIndex + 1]);
 	}
-
-
 }
