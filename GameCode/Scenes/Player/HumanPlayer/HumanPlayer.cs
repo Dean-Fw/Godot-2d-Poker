@@ -1,8 +1,11 @@
 using Godot;
+using System.Linq;
 
 public partial class HumanPlayer : Player
 {
     [Export] private Button nextButton;
+
+    private bool cardsFlipped = false;
 
     public override void _Ready()
     {
@@ -11,6 +14,15 @@ public partial class HumanPlayer : Player
 
     public override void StartTurn()
     {
+        if (!cardsFlipped)
+        {
+            foreach (var card in HandContainer.GetChildren().OfType<Card>())
+            {
+                card.FlipCard();
+            }
+            cardsFlipped = true;
+        }
+
         GD.Print("Player Start");
         nextButton.Disabled = false;
     }
@@ -19,11 +31,5 @@ public partial class HumanPlayer : Player
     {
         nextButton.Disabled = true;
         MakeBet(10);
-        MoveNext();
-    }
-
-    private void ToggleButtonActive()
-    {
-        nextButton.Disabled = !nextButton.Disabled;
     }
 }

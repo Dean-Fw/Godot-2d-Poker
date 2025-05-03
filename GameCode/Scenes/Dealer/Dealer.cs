@@ -4,7 +4,8 @@ public partial class Dealer : Control
 {
     [Export] private PackedScene deckScene;
     [Export] private HBoxContainer communityCardsContianer;
-    [Export] private PlayerParent PlayersParent;
+    [Export] private PlayerParent playersParent;
+    [Export] private RoundManager roundManager;
 
     private Deck deck = null!;
 
@@ -13,38 +14,59 @@ public partial class Dealer : Control
         deck = deckScene.Instantiate<Deck>();
         AddChild(deck);
 
-        PlayersParent.PlayersReady += () => HandlePlayersReady();
+        playersParent.PlayersReady += () => HandlePlayersReady();
+
+        roundManager.RoundEnd += HandleRoundEnd;
     }
 
-    public void DealToCommunityCards()
+    public void DealToCommunityCards(int cardsToDeal)
     {
-        communityCardsContianer.AddChild(
-            GetCard()
-        );
+        for (int cardsDealt = 0; cardsDealt < cardsToDeal; cardsDealt++)
+        {
+            var card = GetCard();
+            card.FlipCard();
+
+            communityCardsContianer.AddChild(
+                card
+            );
+        }
     }
 
-    public void DealToPlayer(Player player)
+    public void DealHandToPlayer(Player player)
     {
         player.HandContainer.AddChild(
-            GetCard()
+                GetCard()
+        );
+
+        player.HandContainer.AddChild(
+                GetCard()
         );
     }
 
     private void HandlePlayersReady()
     {
         // get all players from the players node and listen to their trun end signal
-        foreach (var player in PlayersParent.Players)
+        foreach (var player in playersParent.Players)
         {
-            player.TurnEnd += DealToPlayer;
+            DealHandToPlayer(player);
         }
+    }
+
+    private void HandleRoundEnd(RoundPhase nextRoundPhase)
+    {
+        if (nextRoundPhase == RoundPhase.Flop)
+        {
+            DealToCommunityCards(3);
+            return;
+        }
+
+        DealToCommunityCards(1);
     }
 
     private Card GetCard()
     {
         var card = deck.GetChild<Card>(0);
         deck.RemoveChild(card);
-
-        card.FlipCard();
 
         return card;
     }
