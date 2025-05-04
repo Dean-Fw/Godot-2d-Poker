@@ -72,6 +72,8 @@ public partial class RoundManager : Node
         // end this cycle of the game if the river round has finished (for now) 
         if (currentRoundPhase == RoundPhase.River)
         {
+            EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(RoundPhase.ShowDown));
+
             GD.Print("Game Ended");
             return;
         }

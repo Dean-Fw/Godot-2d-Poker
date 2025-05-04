@@ -17,10 +17,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "playerParent")]
+[node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "roundManager", "playerParent")]
 script = ExtResource("2_3k6gv")
 tableCenter = NodePath("../Table/TableCenter")
 potScene = ExtResource("3_1q8bt")
+roundManager = NodePath("../RoundManager")
 playerParent = NodePath("../Table/PlayerParent")
 
 [node name="Dealer" parent="." node_paths=PackedStringArray("communityCardsContianer", "playersParent", "roundManager") instance=ExtResource("2_gl6un")]

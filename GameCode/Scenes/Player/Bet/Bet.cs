@@ -16,4 +16,10 @@ public partial class Bet : Node
         Value += amount;
         betLabel.Text = Value.ToString();
     }
+
+    public void ClearBet()
+    {
+        Value = 0;
+        betLabel.Text = Value.ToString();
+    }
 }

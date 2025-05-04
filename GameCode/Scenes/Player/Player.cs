@@ -21,6 +21,12 @@ public partial class Player : Node
         CurrentBet = betScene.Instantiate<Bet>();
     }
 
+    public void AddChipsToPot()
+    {
+        roundInformation.RemoveChild(CurrentBet);
+        CurrentBet.ClearBet();
+    }
+
     public void SetChipCount(int value)
     {
         ChipCount = value;
@@ -41,7 +47,6 @@ public partial class Player : Node
     {
         // Set players current bet to the bet value
         SetChipCount(ChipCount - value);
-        GD.Print(CurrentBet == null);
         CurrentBet.AddChips(value);
 
         if (!roundInformation.ContainsChildOfType<Bet>())

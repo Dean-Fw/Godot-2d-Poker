@@ -54,6 +54,9 @@ public partial class Dealer : Control
 
     private void HandleRoundEnd(RoundPhase nextRoundPhase)
     {
+        if (nextRoundPhase == RoundPhase.ShowDown)
+            return;
+
         if (nextRoundPhase == RoundPhase.Flop)
         {
             DealToCommunityCards(3);
