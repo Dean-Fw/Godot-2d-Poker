@@ -8,6 +8,7 @@ public partial class Player : Node
 
     [Export] private PackedScene betScene = null!;
     [Export] private HBoxContainer roundInformation = null!;
+    [Export] private Label BlindsLabel = null!;
 
     [Signal] public delegate void TurnEndEventHandler(Player player);
 
@@ -19,6 +20,11 @@ public partial class Player : Node
     {
         chipCounter.Text = $"Chips: {ChipCount}";
         CurrentBet = betScene.Instantiate<Bet>();
+    }
+
+    public void AddDealerChip()
+    {
+        BlindsLabel.Text = "D";
     }
 
     public void AddChipsToPot()

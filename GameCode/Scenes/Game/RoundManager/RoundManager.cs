@@ -27,6 +27,8 @@ public partial class RoundManager : Node
     {
         EmitSignal(SignalName.RoundStart, playersParent.Players.Count);
 
+        playersParent.Players[blindsManager.Blinds.Dealer].AddDealerChip();
+
         StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
     }
 
