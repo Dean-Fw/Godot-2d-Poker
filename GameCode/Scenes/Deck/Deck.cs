@@ -3,7 +3,7 @@ using System;
 
 public partial class Deck : Control
 {
-    [Export] private PackedScene cardScene;
+    [Export] private PackedScene cardScene = null!;
 
     public override void _Ready()
     {

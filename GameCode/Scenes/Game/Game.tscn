@@ -17,10 +17,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "playerParent")]
+[node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "roundManager", "playerParent")]
 script = ExtResource("2_3k6gv")
 tableCenter = NodePath("../Table/TableCenter")
 potScene = ExtResource("3_1q8bt")
+roundManager = NodePath("../RoundManager")
 playerParent = NodePath("../Table/PlayerParent")
 
 [node name="Dealer" parent="." node_paths=PackedStringArray("communityCardsContianer", "playersParent", "roundManager") instance=ExtResource("2_gl6un")]
@@ -83,10 +84,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 19.0
-offset_top = 754.0
-offset_right = 627.0
-offset_bottom = 1035.0
+offset_left = 29.0
+offset_top = 655.0
+offset_right = 637.0
+offset_bottom = 1040.0
 grow_vertical = 2
 
 [node name="ComputerPlayer" parent="Table/PlayerParent" instance=ExtResource("3_j5yw3")]
@@ -109,9 +110,9 @@ grow_vertical = 1
 
 [node name="ComputerPlayer3" parent="Table/PlayerParent" instance=ExtResource("3_j5yw3")]
 layout_mode = 1
-offset_left = 1281.0
-offset_top = 804.0
-offset_right = 1896.52
+offset_left = 1273.0
+offset_top = 700.0
+offset_right = 1888.52
 offset_bottom = 1059.12
 grow_horizontal = 1
 grow_vertical = 1

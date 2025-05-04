@@ -1,70 +1,86 @@
 [gd_scene load_steps=4 format=3 uid="uid://cd6dmqn4vash3"]
 
 [ext_resource type="Script" uid="uid://ckidki47ew6uo" path="res://Scenes/Player/HumanPlayer/HumanPlayer.cs" id="1_ovyus"]
-[ext_resource type="PackedScene" uid="uid://cv8gtyr6520y3" path="res://Scenes/Pot/Pot.tscn" id="2_1nx5p"]
 [ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_ft8w5"]
+[ext_resource type="PackedScene" uid="uid://20giuts1612a" path="res://Scenes/Player/Bet/Bet.tscn" id="3_wufwl"]
 
-[node name="HumanPlayer" type="PanelContainer" node_paths=PackedStringArray("nextButton", "HandContainer", "chipCounter")]
+[node name="HumanPlayer" type="VBoxContainer" node_paths=PackedStringArray("nextButton", "HandContainer", "chipCounter", "roundInformation", "BlindsLabel")]
 anchors_preset = -1
 anchor_right = 0.337
 anchor_bottom = 0.297
 offset_right = 0.959961
-offset_bottom = 0.23999
+offset_bottom = 104.24
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_ovyus")
-nextButton = NodePath("VBoxContainer/HBoxContainer/Bet")
-HandContainer = NodePath("VBoxContainer/InformationMargin/Information/Hand")
-chipCounter = NodePath("VBoxContainer/InformationMargin/Information/ChipsMargin/Chips/ChipCount")
-pot = ExtResource("2_1nx5p")
+nextButton = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/HBoxContainer/Bet")
+HandContainer = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/Hand")
+chipCounter = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips/ChipCount")
+betScene = ExtResource("3_wufwl")
+roundInformation = NodePath("PlayerContainer/RoundInformation")
+BlindsLabel = NodePath("PlayerContainer/RoundInformation/Blind")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="PlayerContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="InformationMargin" type="MarginContainer" parent="VBoxContainer"]
+[node name="RoundInformation" type="HBoxContainer" parent="PlayerContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Blind" type="Label" parent="PlayerContainer/RoundInformation"]
+layout_mode = 2
+
+[node name="PlayerPanel" type="PanelContainer" parent="PlayerContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+
+[node name="PlayerInformation" type="VBoxContainer" parent="PlayerContainer/PlayerPanel"]
+layout_mode = 2
+
+[node name="InformationMargin" type="MarginContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Information" type="HBoxContainer" parent="VBoxContainer/InformationMargin"]
+[node name="Information" type="HBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 
-[node name="Hand" type="HBoxContainer" parent="VBoxContainer/InformationMargin/Information"]
+[node name="Hand" type="HBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information"]
 custom_minimum_size = Vector2(385, 0)
 layout_mode = 2
 
-[node name="ChipsMargin" type="MarginContainer" parent="VBoxContainer/InformationMargin/Information"]
+[node name="ChipsMargin" type="MarginContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Chips" type="VBoxContainer" parent="VBoxContainer/InformationMargin/Information/ChipsMargin"]
+[node name="Chips" type="VBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/InformationMargin/Information/ChipsMargin/Chips"]
+[node name="TextureRect" type="TextureRect" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 texture = ExtResource("2_ft8w5")
 expand_mode = 1
 
-[node name="ChipCount" type="Label" parent="VBoxContainer/InformationMargin/Information/ChipsMargin/Chips"]
+[node name="ChipCount" type="Label" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips"]
 layout_mode = 2
 text = "Chips: 100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation"]
 layout_mode = 2
 
-[node name="Bet" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Bet" type="Button" parent="PlayerContainer/PlayerPanel/PlayerInformation/HBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3

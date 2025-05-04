@@ -2,10 +2,10 @@ using Godot;
 
 public partial class Dealer : Control
 {
-    [Export] private PackedScene deckScene;
-    [Export] private HBoxContainer communityCardsContianer;
-    [Export] private PlayerParent playersParent;
-    [Export] private RoundManager roundManager;
+    [Export] private PackedScene deckScene = null!;
+    [Export] private HBoxContainer communityCardsContianer = null!;
+    [Export] private PlayerParent playersParent = null!;
+    [Export] private RoundManager roundManager = null!;
 
     private Deck deck = null!;
 
@@ -54,6 +54,9 @@ public partial class Dealer : Control
 
     private void HandleRoundEnd(RoundPhase nextRoundPhase)
     {
+        if (nextRoundPhase == RoundPhase.ShowDown)
+            return;
+
         if (nextRoundPhase == RoundPhase.Flop)
         {
             DealToCommunityCards(3);

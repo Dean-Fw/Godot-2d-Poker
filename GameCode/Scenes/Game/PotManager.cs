@@ -1,35 +1,36 @@
 using Godot;
-using System.Linq;
 
 public partial class PotManager : Node
 {
-    [Export] private HBoxContainer tableCenter;
-    [Export] private PackedScene potScene;
-    [Export] private PlayerParent playerParent;
+    [Export] private HBoxContainer tableCenter = null!;
+    [Export] private PackedScene potScene = null!;
+    [Export] private RoundManager roundManager = null!;
+    [Export] private PlayerParent playerParent = null!;
 
     public Pot Pot { get; private set; } = null!;
 
     public override void _Ready()
     {
-        playerParent.PlayersReady += () => HandlePlayersReady();
+        roundManager.RoundEnd += (RoundPhase _) => HandleRoundEnd();
     }
 
-    private void HandlePlayersReady()
+    private void HandleRoundEnd()
     {
+        var potTotal = 0;
+
         foreach (var player in playerParent.Players)
-            player.Bet += HandleBet;
-    }
+        {
+            potTotal += player.CurrentBet.Value;
+            player.AddChipsToPot();
+        }
 
-    // Bets should not go straight to the pot, should be added after all bets are made
-    private void HandleBet(int value)
-    {
-        if (!tableCenter.GetChildren().ToList().Exists(x => x is Pot))
+        if (!tableCenter.ContainsChildOfType<Pot>())
         {
             Pot = potScene.Instantiate<Pot>();
             tableCenter.AddChild(Pot);
         }
 
-        Pot.AddChips(value);
+        Pot.AddChips(potTotal);
     }
 
 }

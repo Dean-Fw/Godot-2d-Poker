@@ -6,7 +6,7 @@ public partial class PlayerParent : Control
 {
     [Signal] public delegate void PlayersReadyEventHandler();
 
-    public List<Player> Players { get; private set; }
+    public List<Player> Players { get; private set; } = [];
 
     public override void _Ready()
     {

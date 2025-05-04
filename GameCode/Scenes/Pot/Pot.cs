@@ -2,7 +2,7 @@ using Godot;
 
 public partial class Pot : Control
 {
-    [Export] private Label ChipCount;
+    [Export] private Label ChipCount = null!;
 
     private int size;
 
