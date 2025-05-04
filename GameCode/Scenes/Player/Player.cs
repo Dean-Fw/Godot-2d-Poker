@@ -2,20 +2,23 @@ using Godot;
 
 public partial class Player : Node
 {
-    [Export] public HBoxContainer HandContainer;
+    [Export] public HBoxContainer HandContainer = null!;
 
-    [Export] private Label chipCounter;
-    [Export] private PackedScene pot;
+    [Export] private Label chipCounter = null!;
+
+    [Export] private PackedScene betScene = null!;
+    [Export] private HBoxContainer roundInformation = null!;
 
     [Signal] public delegate void TurnEndEventHandler(Player player);
-    [Signal] public delegate void BetEventHandler(int value);
 
-    public int ChipCount { get; set; }
-    public int CurrentBet { get; set; }
+    public int ChipCount { get; private set; }
+
+    public Bet CurrentBet { get; private set; } = null!;
 
     public override void _Ready()
     {
         chipCounter.Text = $"Chips: {ChipCount}";
+        CurrentBet = betScene.Instantiate<Bet>();
     }
 
     public void SetChipCount(int value)
@@ -37,11 +40,16 @@ public partial class Player : Node
     protected void MakeBet(int value)
     {
         // Set players current bet to the bet value
-        CurrentBet += value;
         SetChipCount(ChipCount - value);
+        GD.Print(CurrentBet == null);
+        CurrentBet.AddChips(value);
+
+        if (!roundInformation.ContainsChildOfType<Bet>())
+        {
+            roundInformation.AddChild(CurrentBet);
+        }
 
         // Signal a bet has been made
-        EmitSignal(SignalName.Bet, value);
         MoveNext();
     }
 

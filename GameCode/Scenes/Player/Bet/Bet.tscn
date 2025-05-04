@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://20giuts1612a"]
+
+[ext_resource type="Script" uid="uid://df1v1ufpxiopp" path="res://Scenes/Player/Bet/Bet.cs" id="1_2xteo"]
+[ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="1_xv7bp"]
+
+[node name="Bet" type="MarginContainer" node_paths=PackedStringArray("betLabel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1760.0
+offset_bottom = -991.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 10
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_2xteo")
+betLabel = NodePath("BetContainer/BetAmount")
+
+[node name="BetContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="BetAmount" type="Label" parent="BetContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+
+[node name="ChipsImage" type="TextureRect" parent="BetContainer"]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 2
+texture = ExtResource("1_xv7bp")
+expand_mode = 1

@@ -2,8 +2,8 @@ using Godot;
 
 public partial class RoundManager : Node
 {
-    [Export] private PlayerParent playersParent;
-    [Export] private BlindsManager blindsManager;
+    [Export] private PlayerParent playersParent = null!;
+    [Export] private BlindsManager blindsManager = null!;
 
     [Signal] public delegate void TurnStartEventHandler();
     [Signal] public delegate void RoundStartEventHandler(int playerCount);
@@ -44,8 +44,8 @@ public partial class RoundManager : Node
         // Stop Listening to THIS player about them finishing their turn
         player.TurnEnd -= HandleTurnEnd;
 
-        if (player.CurrentBet > highestBet)
-            highestBet = player.CurrentBet;
+        if (player.CurrentBet.Value > highestBet)
+            highestBet = player.CurrentBet.Value;
 
         //Pick the next player
 
@@ -57,7 +57,7 @@ public partial class RoundManager : Node
 
         // If the next player has not matched the highest bet then they have to act
 
-        if (nextPlayer.CurrentBet != highestBet)
+        if (nextPlayer.CurrentBet == null || nextPlayer.CurrentBet.Value != highestBet)
         {
             StartPlayerTurn(nextPlayer);
             return;

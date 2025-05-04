@@ -3,12 +3,13 @@ using System.Linq;
 
 public partial class HumanPlayer : Player
 {
-    [Export] private Button nextButton;
+    [Export] private Button nextButton = null!;
 
     private bool cardsFlipped = false;
 
     public override void _Ready()
     {
+        base._Ready();
         nextButton.ButtonDown += () => HandlePress();
     }
 

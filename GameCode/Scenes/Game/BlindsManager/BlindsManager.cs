@@ -6,7 +6,7 @@ public partial class BlindsManager : Node
     [Export] public int Ante { get; private set; }
 
     [Export] private double anteIncreaseRate;
-    [Export] private RoundManager roundManager;
+    [Export] private RoundManager roundManager = null!;
 
     public RoundBlinds Blinds { get; private set; } = null!;
 
