@@ -44,6 +44,7 @@ blindsManager = NodePath("../BlindsManager")
 
 [node name="BlindsManager" type="Node" parent="."]
 script = ExtResource("2_gvja8")
+Ante = 10
 
 [node name="Table" type="ColorRect" parent="."]
 layout_mode = 1

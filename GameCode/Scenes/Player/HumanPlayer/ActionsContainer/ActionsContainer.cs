@@ -27,6 +27,9 @@ public partial class ActionsContainer : Node
         callAmount = minimumBet;
         allInAmount = maximumBet;
 
+        GD.Print(minimumBet);
+        GD.Print(maximumBet);
+
         callButton.Disabled = false;
         foldButton.Disabled = false;
 
@@ -52,7 +55,6 @@ public partial class ActionsContainer : Node
         raiseButton.Disabled = true;
         foldButton.Disabled = true;
 
-        raiseAmountSlider.Value = 0;
         raiseAmountSlider.Editable = false;
     }
 
@@ -64,7 +66,7 @@ public partial class ActionsContainer : Node
 
     private void RaiseAmountSliderHandler(double value)
     {
-        raiseAmount = (int)Math.Floor(allInAmount * (value / 100));
+        raiseAmount = (int)Math.Floor(allInAmount * (value / allInAmount));
         raiseButton.Text = raiseAmount == allInAmount ? "All In" : $"Raise ({raiseAmount})";
 
         if (raiseAmount == callAmount)
@@ -74,11 +76,15 @@ public partial class ActionsContainer : Node
         }
 
         raiseButton.Disabled = false;
+        GD.Print(raiseAmount);
     }
 
     private void RaiseButtonHandler()
     {
         DisableActions();
         EmitSignal(SignalName.Bet, raiseAmount);
+
+        raiseAmount = 0;
+        raiseAmountSlider.Value = 0;
     }
 }
