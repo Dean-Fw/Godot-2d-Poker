@@ -8,9 +8,9 @@ public partial class ComputerPlayer : Player
         base._Ready();
     }
 
-    public override void StartTurn()
+    public override void StartTurn(int minimumBet)
     {
         GD.Print("PC START");
-        MakeBet(10);
+        MakeBet(minimumBet);
     }
 }

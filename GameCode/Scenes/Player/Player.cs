@@ -39,7 +39,7 @@ public partial class Player : Node
         chipCounter.Text = $"Chips: {ChipCount}";
     }
 
-    public virtual void StartTurn()
+    public virtual void StartTurn(int minimumBet)
     {
     }
 

@@ -6,18 +6,10 @@ public partial class BlindsManager : Node
     [Export] public int Ante { get; private set; }
 
     [Export] private double anteIncreaseRate;
-    [Export] private RoundManager roundManager = null!;
 
     public RoundBlinds Blinds { get; private set; } = null!;
-
-
-    public override void _Ready()
-    {
-        roundManager.RoundStart += SetBlinds;
-    }
-
     // Possibly not the cleaneast implementation but works for now :)
-    private void SetBlinds(int playerCount)
+    public void SetBlinds(int playerCount)
     {
         // if the blinds have not been set then we start from the beginning of the playercount
         if (Blinds == null)
@@ -27,7 +19,6 @@ public partial class BlindsManager : Node
             Blinds.SmallBlind = GetPositionOfNextBlind(Blinds.Dealer, playerCount);
             Blinds.BigBlind = GetPositionOfNextBlind(Blinds.SmallBlind, playerCount);
             Blinds.UnderTheGun = GetPositionOfNextBlind(Blinds.BigBlind, playerCount);
-            return;
         }
 
         // Otherwise we want to shift the blinds one index

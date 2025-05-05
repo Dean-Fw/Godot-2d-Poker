@@ -5,11 +5,9 @@ public partial class RoundManager : Node
     [Export] private PlayerParent playersParent = null!;
     [Export] private BlindsManager blindsManager = null!;
 
-    [Signal] public delegate void TurnStartEventHandler();
-    [Signal] public delegate void RoundStartEventHandler(int playerCount);
     [Signal] public delegate void RoundEndEventHandler(RoundPhase nextPhase);
 
-    private int highestBet;
+    private int highestBet = 20;
     private RoundPhase currentRoundPhase;
 
     public override void _Ready()
@@ -20,13 +18,12 @@ public partial class RoundManager : Node
 
     private void HandlePlayersReady()
     {
+        blindsManager.SetBlinds(playersParent.Players.Count);
         StartRound();
     }
 
     private void StartRound()
     {
-        EmitSignal(SignalName.RoundStart, playersParent.Players.Count);
-
         playersParent.Players[blindsManager.Blinds.Dealer].AddDealerChip();
 
         StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
@@ -38,7 +35,7 @@ public partial class RoundManager : Node
         player.TurnEnd += HandleTurnEnd;
 
         // Tell them to begin their turn
-        player.StartTurn();
+        player.StartTurn(highestBet);
     }
 
     private void HandleTurnEnd(Player player)
