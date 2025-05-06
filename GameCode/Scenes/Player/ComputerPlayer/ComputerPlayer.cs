@@ -10,7 +10,7 @@ public partial class ComputerPlayer : Player
 
     public override void StartTurn(int minimumBet)
     {
-        GD.Print("PC START");
+        GD.Print($"{Name} Start");
         MakeBet(minimumBet);
     }
 }

@@ -12,6 +12,7 @@ public partial class HumanPlayer : Player
         base._Ready();
 
         actionsContainer.Bet += HandleBet;
+        actionsContainer.Fold += () => HandleFold();
     }
 
     public override void StartTurn(int minimumBet)
@@ -32,5 +33,10 @@ public partial class HumanPlayer : Player
     private void HandleBet(int betAmount)
     {
         MakeBet(betAmount);
+    }
+
+    private void HandleFold()
+    {
+        Fold();
     }
 }

@@ -20,6 +20,7 @@ public partial class ActionsContainer : Node
         callButton.Pressed += () => CallButtonHandler();
         raiseAmountSlider.ValueChanged += RaiseAmountSliderHandler;
         raiseButton.Pressed += () => RaiseButtonHandler();
+        foldButton.Pressed += () => FoldButtonHandler();
     }
 
     public void ReadyActions(int minimumBet, int maximumBet)
@@ -86,5 +87,11 @@ public partial class ActionsContainer : Node
 
         raiseAmount = 0;
         raiseAmountSlider.Value = 0;
+    }
+
+    private void FoldButtonHandler()
+    {
+        DisableActions();
+        EmitSignal(SignalName.Fold);
     }
 }
