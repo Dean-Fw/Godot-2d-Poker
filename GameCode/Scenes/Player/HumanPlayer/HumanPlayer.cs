@@ -3,17 +3,19 @@ using System.Linq;
 
 public partial class HumanPlayer : Player
 {
-    [Export] private Button nextButton = null!;
+    [Export] private ActionsContainer actionsContainer = null!;
 
     private bool cardsFlipped = false;
 
     public override void _Ready()
     {
         base._Ready();
-        nextButton.ButtonDown += () => HandlePress();
+
+        actionsContainer.Bet += HandleBet;
+        actionsContainer.Fold += () => HandleFold();
     }
 
-    public override void StartTurn()
+    public override void StartTurn(int minimumBet)
     {
         if (!cardsFlipped)
         {
@@ -25,12 +27,16 @@ public partial class HumanPlayer : Player
         }
 
         GD.Print("Player Start");
-        nextButton.Disabled = false;
+        actionsContainer.ReadyActions(minimumBet, ChipCount);
     }
 
-    private void HandlePress()
+    private void HandleBet(int betAmount)
     {
-        nextButton.Disabled = true;
-        MakeBet(10);
+        MakeBet(betAmount);
+    }
+
+    private void HandleFold()
+    {
+        Fold();
     }
 }

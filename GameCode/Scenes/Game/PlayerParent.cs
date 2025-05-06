@@ -18,6 +18,9 @@ public partial class PlayerParent : Control
 
         GiveInitialChips(100);
 
+        foreach (var player in Players)
+            player.FoldCards += HandleFold;
+
         EmitSignal(SignalName.PlayersReady);
     }
 
@@ -25,5 +28,13 @@ public partial class PlayerParent : Control
     {
         foreach (var player in Players)
             player.SetChipCount(value);
+    }
+
+    private void HandleFold(Player player)
+    {
+        // Remove folding Player
+        Players.Remove(player);
+
+        player.FoldCards -= HandleFold;
     }
 }

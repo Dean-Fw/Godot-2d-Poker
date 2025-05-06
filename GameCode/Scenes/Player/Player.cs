@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Player : Node
+public partial class Player : Control
 {
     [Export] public HBoxContainer HandContainer = null!;
 
@@ -11,6 +11,7 @@ public partial class Player : Node
     [Export] private Label BlindsLabel = null!;
 
     [Signal] public delegate void TurnEndEventHandler(Player player);
+    [Signal] public delegate void FoldCardsEventHandler(Player player);
 
     public int ChipCount { get; private set; }
 
@@ -39,7 +40,7 @@ public partial class Player : Node
         chipCounter.Text = $"Chips: {ChipCount}";
     }
 
-    public virtual void StartTurn()
+    public virtual void StartTurn(int minimumBet)
     {
     }
 
@@ -61,6 +62,16 @@ public partial class Player : Node
         }
 
         // Signal a bet has been made
+        MoveNext();
+    }
+
+    protected void Fold()
+    {
+        EmitSignal(SignalName.FoldCards, this);
+
+        foreach (var card in HandContainer.GetChildren())
+            HandContainer.RemoveChild(card);
+
         MoveNext();
     }
 

@@ -5,8 +5,6 @@ public partial class RoundManager : Node
     [Export] private PlayerParent playersParent = null!;
     [Export] private BlindsManager blindsManager = null!;
 
-    [Signal] public delegate void TurnStartEventHandler();
-    [Signal] public delegate void RoundStartEventHandler(int playerCount);
     [Signal] public delegate void RoundEndEventHandler(RoundPhase nextPhase);
 
     private int highestBet;
@@ -20,14 +18,16 @@ public partial class RoundManager : Node
 
     private void HandlePlayersReady()
     {
+        blindsManager.SetBlinds(playersParent.Players.Count);
+        highestBet = blindsManager.Ante;
+
+        playersParent.Players[blindsManager.Blinds.Dealer].AddDealerChip();
         StartRound();
     }
 
     private void StartRound()
     {
-        EmitSignal(SignalName.RoundStart, playersParent.Players.Count);
-
-        playersParent.Players[blindsManager.Blinds.Dealer].AddDealerChip();
+        highestBet = blindsManager.Ante;
 
         StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
     }
@@ -38,13 +38,19 @@ public partial class RoundManager : Node
         player.TurnEnd += HandleTurnEnd;
 
         // Tell them to begin their turn
-        player.StartTurn();
+        player.StartTurn(highestBet);
     }
 
     private void HandleTurnEnd(Player player)
     {
         // Stop Listening to THIS player about them finishing their turn
         player.TurnEnd -= HandleTurnEnd;
+
+        if (playersParent.Players.Count == 1)
+        {
+            GD.Print("Game ended as only one player left");
+            return;
+        }
 
         if (player.CurrentBet.Value > highestBet)
             highestBet = player.CurrentBet.Value;
