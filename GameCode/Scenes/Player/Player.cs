@@ -11,11 +11,14 @@ public partial class Player : Control
     [Export] private Label BlindsLabel = null!;
 
     [Signal] public delegate void TurnEndEventHandler(Player player);
-    [Signal] public delegate void FoldCardsEventHandler(Player player);
 
     public int ChipCount { get; private set; }
 
     public Bet CurrentBet { get; private set; } = null!;
+
+    public bool Folded { get; private set; }
+
+    protected int amountToCall;
 
     public override void _Ready()
     {
@@ -34,6 +37,11 @@ public partial class Player : Control
         CurrentBet.ClearBet();
     }
 
+    public void GiveBlinds(int blind)
+    {
+        MoveChipsToTable(blind);
+    }
+
     public void SetChipCount(int value)
     {
         ChipCount = value;
@@ -42,6 +50,7 @@ public partial class Player : Control
 
     public virtual void StartTurn(int minimumBet)
     {
+        amountToCall = minimumBet - CurrentBet.Value;
     }
 
     // Signal to end this players turn	
@@ -52,6 +61,23 @@ public partial class Player : Control
 
     protected void MakeBet(int value)
     {
+        MoveChipsToTable(value);
+        // Signal a bet has been made
+        MoveNext();
+    }
+
+    protected void Fold()
+    {
+        foreach (var card in HandContainer.GetChildren())
+            HandContainer.RemoveChild(card);
+
+        Folded = true;
+
+        MoveNext();
+    }
+
+    private void MoveChipsToTable(int value)
+    {
         // Set players current bet to the bet value
         SetChipCount(ChipCount - value);
         CurrentBet.AddChips(value);
@@ -60,19 +86,6 @@ public partial class Player : Control
         {
             roundInformation.AddChild(CurrentBet);
         }
-
-        // Signal a bet has been made
-        MoveNext();
-    }
-
-    protected void Fold()
-    {
-        EmitSignal(SignalName.FoldCards, this);
-
-        foreach (var card in HandContainer.GetChildren())
-            HandContainer.RemoveChild(card);
-
-        MoveNext();
     }
 
 }

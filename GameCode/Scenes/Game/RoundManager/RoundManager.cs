@@ -21,14 +21,18 @@ public partial class RoundManager : Node
         blindsManager.SetBlinds(playersParent.Players.Count);
         highestBet = blindsManager.Ante;
 
+        playersParent.Players[blindsManager.Blinds.SmallBlind].GiveBlinds(blindsManager.Ante);
+
+        playersParent.Players[blindsManager.Blinds.BigBlind].GiveBlinds(blindsManager.Ante * 2);
+
+        highestBet = blindsManager.Ante * 2;
+
         playersParent.Players[blindsManager.Blinds.Dealer].AddDealerChip();
         StartRound();
     }
 
     private void StartRound()
     {
-        highestBet = blindsManager.Ante;
-
         StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
     }
 
@@ -56,16 +60,12 @@ public partial class RoundManager : Node
             highestBet = player.CurrentBet.Value;
 
         //Pick the next player
-
-        // What position is the current player in
-        var playerIndex = playersParent.Players.IndexOf(player);
-
-        // Get the next player
-        var nextPlayer = playerIndex + 1 >= playersParent.Players.Count ? playersParent.Players[0] : playersParent.Players[playerIndex + 1];
+        var nextPlayer = playersParent.GetNextUnfoldedPlayer(player);
 
         // If the next player has not matched the highest bet then they have to act
-
-        if (nextPlayer.CurrentBet == null || nextPlayer.CurrentBet.Value != highestBet)
+        // TODO This needs to be changed to include cases where the table has checked (Bet will be 0)
+        // Possibly need to refactor turn management in to it's own node, breaching the S in SOLID here
+        if (nextPlayer.CurrentBet.Value != highestBet)
         {
             StartPlayerTurn(nextPlayer);
             return;
@@ -91,6 +91,9 @@ public partial class RoundManager : Node
 
         // Signal the round has ended and the round we are going to
         EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(currentRoundPhase));
+
+        // Reset betting
+        highestBet = 0;
 
         StartRound();
 
