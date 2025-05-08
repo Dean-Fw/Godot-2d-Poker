@@ -17,6 +17,8 @@ public partial class HumanPlayer : Player
 
     public override void StartTurn(int minimumBet)
     {
+        base.StartTurn(minimumBet);
+
         if (!cardsFlipped)
         {
             foreach (var card in HandContainer.GetChildren().OfType<Card>())
@@ -27,7 +29,7 @@ public partial class HumanPlayer : Player
         }
 
         GD.Print("Player Start");
-        actionsContainer.ReadyActions(minimumBet, ChipCount);
+        actionsContainer.ReadyActions(amountToCall, ChipCount);
     }
 
     private void HandleBet(int betAmount)

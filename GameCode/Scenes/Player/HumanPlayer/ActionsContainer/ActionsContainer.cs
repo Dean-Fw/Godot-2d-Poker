@@ -28,9 +28,6 @@ public partial class ActionsContainer : Node
         callAmount = minimumBet;
         allInAmount = maximumBet;
 
-        GD.Print(minimumBet);
-        GD.Print(maximumBet);
-
         callButton.Disabled = false;
         foldButton.Disabled = false;
 
@@ -40,7 +37,10 @@ public partial class ActionsContainer : Node
             return;
         }
 
-        callButton.Text = $"Call ({callAmount})";
+        if (minimumBet == 0)
+            callButton.Text = "Check";
+        else
+            callButton.Text = $"Call ({callAmount})";
 
         raiseButton.Text = $"Raise ({callAmount})";
 
@@ -77,7 +77,6 @@ public partial class ActionsContainer : Node
         }
 
         raiseButton.Disabled = false;
-        GD.Print(raiseAmount);
     }
 
     private void RaiseButtonHandler()

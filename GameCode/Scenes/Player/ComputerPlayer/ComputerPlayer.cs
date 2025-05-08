@@ -11,6 +11,8 @@ public partial class ComputerPlayer : Player
 
     public override void StartTurn(int minimumBet)
     {
+        base.StartTurn(minimumBet);
+
         GD.Print($"{Name} Start");
 
         var random = new Random();
@@ -19,12 +21,15 @@ public partial class ComputerPlayer : Player
         switch (choice)
         {
             case 0:
-                GD.Print($"{Name} Calls");
-                MakeBet(minimumBet);
+                GD.Print($"{Name} Calls {amountToCall}");
+                MakeBet(amountToCall);
                 break;
             case 1:
-                GD.Print($"{Name} Raises");
-                MakeBet(ChipCount * (random.Next(minimumBet + 1, ChipCount + 1) / ChipCount));
+                // Bet is a random int between 1 more than the minimumBet and the max chipcount
+                var bet = random.Next(amountToCall + 1, ChipCount + 1);
+                GD.Print($"{Name} Raises {bet}");
+
+                MakeBet(bet);
                 break;
             case 2:
                 GD.Print($"{Name} Folds");

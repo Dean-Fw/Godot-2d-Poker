@@ -84,35 +84,35 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 594.0
-offset_right = 624.0
-offset_bottom = 1029.0
+offset_left = 8.0
+offset_top = 599.0
+offset_right = 616.0
+offset_bottom = 1034.0
 grow_vertical = 2
 
 [node name="ComputerPlayer" parent="Table/PlayerParent" instance=ExtResource("3_j5yw3")]
 layout_mode = 1
-offset_left = 17.0
-offset_top = 14.0
-offset_right = 632.52
-offset_bottom = 269.12
+offset_left = 8.0
+offset_top = 11.0
+offset_right = 623.52
+offset_bottom = 370.12
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="ComputerPlayer2" parent="Table/PlayerParent" instance=ExtResource("3_j5yw3")]
 layout_mode = 1
-offset_left = 1281.0
-offset_top = 9.0
-offset_right = 1896.52
-offset_bottom = 264.12
+offset_left = 1289.0
+offset_top = 3.0
+offset_right = 1904.52
+offset_bottom = 362.12
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="ComputerPlayer3" parent="Table/PlayerParent" instance=ExtResource("3_j5yw3")]
 layout_mode = 1
-offset_left = 1273.0
-offset_top = 700.0
-offset_right = 1888.52
-offset_bottom = 1059.12
+offset_left = 1282.0
+offset_top = 703.0
+offset_right = 1897.52
+offset_bottom = 1062.12
 grow_horizontal = 1
 grow_vertical = 1
