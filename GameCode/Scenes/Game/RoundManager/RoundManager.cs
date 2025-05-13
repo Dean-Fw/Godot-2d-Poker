@@ -1,39 +1,45 @@
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class RoundManager : Node
 {
-    [Export] private PlayerParent playersParent = null!;
     [Export] private BlindsManager blindsManager = null!;
+    [Export] private TurnsManager turnsManager = null!;
 
     [Signal] public delegate void RoundEndEventHandler(RoundPhase nextPhase);
 
     private int highestBet;
-    private RoundPhase currentRoundPhase;
+    private RoundPhase currentRoundPhase = RoundPhase.PreFlop;
 
-    public override void _Ready()
+    private List<Player> playersInRound = [];
+
+    public void StartGameRound(List<Player> players)
     {
-        playersParent.PlayersReady += () => HandlePlayersReady();
-        currentRoundPhase = RoundPhase.PreFlop;
+        playersInRound = players;
+        blindsManager.SetBlinds(playersInRound);
+
+        players.First(p => p.Blind == Blinds.Dealer)
+            .AddDealerChip();
+
+        GatherBlinds();
+
+        StartBettingRound();
     }
 
-    private void HandlePlayersReady()
+    private void GatherBlinds()
     {
-        blindsManager.SetBlinds(playersParent.Players.Count);
-        highestBet = blindsManager.Ante;
+        playersInRound.First(p => p.Blind == Blinds.SmallBlind)
+            .GiveBlinds(10);
 
-        playersParent.Players[blindsManager.Blinds.SmallBlind].GiveBlinds(blindsManager.Ante);
-
-        playersParent.Players[blindsManager.Blinds.BigBlind].GiveBlinds(blindsManager.Ante * 2);
-
-        highestBet = blindsManager.Ante * 2;
-
-        playersParent.Players[blindsManager.Blinds.Dealer].AddDealerChip();
-        StartRound();
+        playersInRound.First(p => p.Blind == Blinds.BigBlind)
+            .GiveBlinds(20);
     }
 
-    private void StartRound()
+    private void StartBettingRound()
     {
-        StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
+        GD.Print("Started Betting");
+
     }
 
     private void StartPlayerTurn(Player player)
@@ -64,7 +70,6 @@ public partial class RoundManager : Node
 
         // If the next player has not matched the highest bet then they have to act
         // TODO This needs to be changed to include cases where the table has checked (Bet will be 0)
-        // Possibly need to refactor turn management in to it's own node, breaching the S in SOLID here
         if (nextPlayer.CurrentBet.Value != highestBet)
         {
             StartPlayerTurn(nextPlayer);

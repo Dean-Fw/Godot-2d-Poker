@@ -18,6 +18,8 @@ public partial class Player : Control
 
     public bool Folded { get; private set; }
 
+    public Blinds Blind { get; set; } = Blinds.NoBlind;
+
     protected int amountToCall;
 
     public override void _Ready()
@@ -61,7 +63,9 @@ public partial class Player : Control
 
     protected void MakeBet(int value)
     {
-        MoveChipsToTable(value);
+        if (value != 0)
+            MoveChipsToTable(value);
+
         // Signal a bet has been made
         MoveNext();
     }

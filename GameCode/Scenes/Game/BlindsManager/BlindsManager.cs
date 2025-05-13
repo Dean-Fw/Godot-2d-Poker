@@ -1,36 +1,25 @@
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class BlindsManager : Node
 {
-
-    [Export] public int Ante { get; private set; }
-
-    [Export] private double anteIncreaseRate;
-
-    public RoundBlinds Blinds { get; private set; } = null!;
-    // Possibly not the cleaneast implementation but works for now :)
-    public void SetBlinds(int playerCount)
+    public void SetBlinds(List<Player> players)
     {
-        // if the blinds have not been set then we start from the beginning of the playercount
-        if (Blinds == null)
+        var dealer = players.FirstOrDefault(p => p.Blind == Blinds.Dealer);
+
+        if (dealer == null)
         {
-            Blinds = new RoundBlinds();
-            Blinds.Dealer = 0;
-            Blinds.SmallBlind = GetPositionOfNextBlind(Blinds.Dealer, playerCount);
-            Blinds.BigBlind = GetPositionOfNextBlind(Blinds.SmallBlind, playerCount);
-            Blinds.UnderTheGun = GetPositionOfNextBlind(Blinds.BigBlind, playerCount);
+            dealer = players[players.Count - 1];
         }
 
-        // Otherwise we want to shift the blinds one index
-        Blinds.Dealer = GetPositionOfNextBlind(Blinds.Dealer, playerCount);
-        Blinds.SmallBlind = GetPositionOfNextBlind(Blinds.Dealer, playerCount);
-        Blinds.BigBlind = GetPositionOfNextBlind(Blinds.SmallBlind, playerCount);
-        Blinds.UnderTheGun = GetPositionOfNextBlind(Blinds.BigBlind, playerCount);
-    }
+        dealer = players.GetNext(players.IndexOf(dealer));
+        dealer.Blind = Blinds.Dealer;
 
-    private int GetPositionOfNextBlind(int blind, int playerCount)
-    {
-        return blind + 1 > playerCount - 1 ? 0 : blind + 1;
+        var smallBlind = players.GetNext(players.IndexOf(dealer));
+        smallBlind.Blind = Blinds.SmallBlind;
 
+        var bigBlind = players.GetNext(players.IndexOf(smallBlind));
+        bigBlind.Blind = Blinds.BigBlind;
     }
 }

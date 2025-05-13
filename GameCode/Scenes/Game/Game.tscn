@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6f20t3dpqog2"]
+[gd_scene load_steps=10 format=3 uid="uid://b6f20t3dpqog2"]
 
+[ext_resource type="PackedScene" uid="uid://t7tnfucgk71d" path="res://Scenes/Game/GameManager/GameManager.tscn" id="1_m1o7v"]
 [ext_resource type="Script" uid="uid://lte4ggmwai5k" path="res://Scenes/Game/PotManager.cs" id="2_3k6gv"]
 [ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="2_gl6un"]
 [ext_resource type="Script" uid="uid://2p2d3usaq47x" path="res://Scenes/Game/BlindsManager/BlindsManager.cs" id="2_gvja8"]
@@ -16,6 +17,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameManager" parent="." node_paths=PackedStringArray("playerParent") instance=ExtResource("1_m1o7v")]
+playerParent = NodePath("../Table/PlayerParent")
 
 [node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "roundManager", "playerParent")]
 script = ExtResource("2_3k6gv")
