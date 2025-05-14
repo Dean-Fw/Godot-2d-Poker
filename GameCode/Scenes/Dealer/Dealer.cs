@@ -1,4 +1,6 @@
 using Godot;
+using System.Collections.Generic;
+using System;
 
 public partial class Dealer : Control
 {
@@ -13,10 +15,6 @@ public partial class Dealer : Control
     {
         deck = deckScene.Instantiate<Deck>();
         AddChild(deck);
-
-        playersParent.PlayersReady += () => HandlePlayersReady();
-
-        roundManager.RoundEnd += HandleRoundEnd;
     }
 
     public void DealToCommunityCards(int cardsToDeal)
@@ -32,24 +30,15 @@ public partial class Dealer : Control
         }
     }
 
-    public void DealHandToPlayer(Player player)
+    public void DealToPlayers(List<Player> players)
     {
-        player.HandContainer.AddChild(
-                GetCard()
-        );
-
-        player.HandContainer.AddChild(
-                GetCard()
-        );
-    }
-
-    private void HandlePlayersReady()
-    {
-        // get all players from the players node and listen to their trun end signal
-        foreach (var player in playersParent.Players)
+        foreach (var player in players)
         {
-            DealHandToPlayer(player);
+            player.HandContainer.AddChild(GetCard());
+
+            player.HandContainer.AddChild(GetCard());
         }
+
     }
 
     private void HandleRoundEnd(RoundPhase nextRoundPhase)
@@ -68,7 +57,12 @@ public partial class Dealer : Control
 
     private Card GetCard()
     {
-        var card = deck.GetChild<Card>(0);
+        var random = new Random();
+
+        var card = deck.GetChild<Card>(
+            random.Next(0, deck.GetChildren().Count)
+        );
+
         deck.RemoveChild(card);
 
         return card;

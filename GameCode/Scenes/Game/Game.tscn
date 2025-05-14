@@ -1,13 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6f20t3dpqog2"]
+[gd_scene load_steps=5 format=3 uid="uid://b6f20t3dpqog2"]
 
 [ext_resource type="PackedScene" uid="uid://t7tnfucgk71d" path="res://Scenes/Game/GameManager/GameManager.tscn" id="1_m1o7v"]
-[ext_resource type="Script" uid="uid://lte4ggmwai5k" path="res://Scenes/Game/PotManager.cs" id="2_3k6gv"]
-[ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="2_gl6un"]
-[ext_resource type="Script" uid="uid://2p2d3usaq47x" path="res://Scenes/Game/BlindsManager/BlindsManager.cs" id="2_gvja8"]
 [ext_resource type="PackedScene" uid="uid://cd6dmqn4vash3" path="res://Scenes/Player/HumanPlayer/HumanPlayer.tscn" id="2_j5yw3"]
-[ext_resource type="PackedScene" uid="uid://cv8gtyr6520y3" path="res://Scenes/Pot/Pot.tscn" id="3_1q8bt"]
 [ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/Game/PlayerParent.cs" id="3_b2bpf"]
-[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/Game/RoundManager/RoundManager.cs" id="3_gvja8"]
 [ext_resource type="PackedScene" uid="uid://c4yif41brjlrw" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.tscn" id="3_j5yw3"]
 
 [node name="Game" type="Control"]
@@ -20,35 +15,6 @@ grow_vertical = 2
 
 [node name="GameManager" parent="." node_paths=PackedStringArray("playerParent") instance=ExtResource("1_m1o7v")]
 playerParent = NodePath("../Table/PlayerParent")
-
-[node name="PotManager" type="Node" parent="." node_paths=PackedStringArray("tableCenter", "roundManager", "playerParent")]
-script = ExtResource("2_3k6gv")
-tableCenter = NodePath("../Table/TableCenter")
-potScene = ExtResource("3_1q8bt")
-roundManager = NodePath("../RoundManager")
-playerParent = NodePath("../Table/PlayerParent")
-
-[node name="Dealer" parent="." node_paths=PackedStringArray("communityCardsContianer", "playersParent", "roundManager") instance=ExtResource("2_gl6un")]
-visible = false
-layout_mode = 2
-offset_left = 549.0
-offset_top = 540.0
-offset_right = 549.0
-offset_bottom = 540.0
-size_flags_horizontal = 0
-size_flags_vertical = 4
-communityCardsContianer = NodePath("../Table/TableCenter/CommunityCards")
-playersParent = NodePath("../Table/PlayerParent")
-roundManager = NodePath("../RoundManager")
-
-[node name="RoundManager" type="Node" parent="." node_paths=PackedStringArray("playersParent", "blindsManager")]
-script = ExtResource("3_gvja8")
-playersParent = NodePath("../Table/PlayerParent")
-blindsManager = NodePath("../BlindsManager")
-
-[node name="BlindsManager" type="Node" parent="."]
-script = ExtResource("2_gvja8")
-Ante = 10
 
 [node name="Table" type="ColorRect" parent="."]
 layout_mode = 1

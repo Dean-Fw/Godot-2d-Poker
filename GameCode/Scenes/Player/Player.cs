@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 public partial class Player : Control
 {
@@ -18,7 +19,7 @@ public partial class Player : Control
 
     public bool Folded { get; private set; }
 
-    public Blinds Blind { get; set; } = Blinds.NoBlind;
+    public List<Blind> Blinds { get; set; } = [];
 
     protected int amountToCall;
 

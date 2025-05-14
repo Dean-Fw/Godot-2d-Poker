@@ -30,13 +30,13 @@ public partial class PlayerParent : Control
         var indexOfCurrentPlayer = Players.IndexOf(currentPlayer);
 
         // Get the next player in the list
-        var nextPlayer = Players.GetNext(Players.IndexOf(currentPlayer));
+        var nextPlayer = Players.GetNext(currentPlayer);
 
         // If the next player has not folded this should never start
         while (nextPlayer.Folded)
         {
             // If the next player has folded, get the next player until we find one that has not folded
-            nextPlayer = Players.GetNext(Players.IndexOf(nextPlayer));
+            nextPlayer = Players.GetNext(nextPlayer);
         }
 
         return nextPlayer;

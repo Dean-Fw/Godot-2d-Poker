@@ -11,7 +11,7 @@ public partial class PotManager : Node
 
     public override void _Ready()
     {
-        roundManager.RoundEnd += (RoundPhase _) => HandleRoundEnd();
+        //        roundManager.RoundEnd += (RoundPhase _) => HandleRoundEnd();
     }
 
     private void HandleRoundEnd()
