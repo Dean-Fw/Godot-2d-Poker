@@ -10,18 +10,51 @@ public partial class RoundManager : Node
 
     public int Ante { get; set; } = 10;
 
+    private RoundPhase roundPhase;
+    private List<Player> playersInRound = [];
+
+    public override void _Ready()
+    {
+        bettingManager.BettingEnded += () => HandleBettingEnded();
+    }
+
     public void StartGameRound(List<Player> players)
     {
-        blindsManager.SetBlinds(players);
+        roundPhase = RoundPhase.PreFlop;
+        playersInRound = players;
+
+        blindsManager.SetBlinds(playersInRound);
 
         players.First(p => p.Blinds.Contains(Blind.Dealer))
             .AddDealerChip();
 
-        blindsManager.GatherBlinds(players, Ante);
+        blindsManager.GatherBlinds(playersInRound, Ante);
 
-        dealer.DealToPlayers(players);
+        dealer.DealToPlayers(playersInRound);
 
-        bettingManager.StartBetting(players, Ante * 2);
+        bettingManager.StartBetting(playersInRound, Ante * 2);
+    }
+
+    private void HandleBettingEnded()
+    {
+        if (roundPhase == RoundPhase.River)
+        {
+            GD.Print("Rond Over");
+            return;
+        }
+
+        roundPhase++;
+
+        if (roundPhase == RoundPhase.Flop)
+            dealer.DealToCommunityCards(3);
+        else
+            dealer.DealToCommunityCards(1);
+
+        // First unfolded player to the right of the dealer 
+        var dealerPlayer = playersInRound.First(p => p.Blinds.Contains(Blind.Dealer));
+        var next = playersInRound.GetNextUnfoldedPlayer(dealerPlayer);
+
+        bettingManager.ContinueBetting(next);
     }
 
 
