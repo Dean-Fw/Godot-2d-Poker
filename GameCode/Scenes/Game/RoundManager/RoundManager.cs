@@ -7,6 +7,7 @@ public partial class RoundManager : Node
     [Export] private BlindsManager blindsManager = null!;
     [Export] private Dealer dealer = null!;
     [Export] private BettingManager bettingManager = null!;
+    [Export] private CommunityCards communityCards = null!;
 
     public int Ante { get; set; } = 10;
 
@@ -30,7 +31,8 @@ public partial class RoundManager : Node
 
         blindsManager.GatherBlinds(playersInRound, Ante);
 
-        dealer.DealToPlayers(playersInRound);
+        foreach (var player in playersInRound)
+            dealer.Deal(player.HandContainer, 2);
 
         bettingManager.StartBetting(playersInRound, Ante * 2);
     }
@@ -39,16 +41,16 @@ public partial class RoundManager : Node
     {
         if (roundPhase == RoundPhase.River)
         {
-            GD.Print("Rond Over");
+            GD.Print("Round Over");
             return;
         }
 
         roundPhase++;
 
         if (roundPhase == RoundPhase.Flop)
-            dealer.DealToCommunityCards(3);
+            dealer.Deal(communityCards, 3);
         else
-            dealer.DealToCommunityCards(1);
+            dealer.Deal(communityCards, 1);
 
         // First unfolded player to the right of the dealer 
         var dealerPlayer = playersInRound.First(p => p.Blinds.Contains(Blind.Dealer));
@@ -58,35 +60,6 @@ public partial class RoundManager : Node
     }
 
 
-    //private void HandleTurnEnd(Player player)
-    //{
-    //// Stop Listening to THIS player about them finishing their turn
-    //player.TurnEnd -= HandleTurnEnd;
-    //
-    //if (playersParent.Players.Count == 1)
-    //{
-    //GD.Print("Game ended as only one player left");
-    //return;
-    //}
-    //
-    //if (player.CurrentBet.Value > highestBet)
-    //highestBet = player.CurrentBet.Value;
-    //
-    ////Pick the next player
-    //var nextPlayer = playersParent.GetNextUnfoldedPlayer(player);
-    //
-    //// If the next player has not matched the highest bet then they have to act
-    //// TODO This needs to be changed to include cases where the table has checked (Bet will be 0)
-    //if (nextPlayer.CurrentBet.Value != highestBet)
-    //{
-    //StartPlayerTurn(nextPlayer);
-    //return;
-    //}
-    //
-    //// end the round
-    //EndRound();
-    //}
-    //
     //private void EndRound()
     //{
     //// end this cycle of the game if the river round has finished (for now) 

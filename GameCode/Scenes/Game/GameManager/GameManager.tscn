@@ -1,26 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://t7tnfucgk71d"]
+[gd_scene load_steps=2 format=3 uid="uid://t7tnfucgk71d"]
 
 [ext_resource type="Script" uid="uid://b5mqnxgp2nmi0" path="res://Scenes/Game/GameManager/GameManager.cs" id="1_17y0f"]
-[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/Game/RoundManager/RoundManager.cs" id="2_06j78"]
-[ext_resource type="Script" uid="uid://2p2d3usaq47x" path="res://Scenes/Game/BlindsManager/BlindsManager.cs" id="3_17y0f"]
-[ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="4_06j78"]
-[ext_resource type="Script" uid="uid://cuq31x1jy6dx1" path="res://Scenes/Game/BettingManager/BettingManager.cs" id="5_lnuoh"]
 
 [node name="GameManager" type="Node" node_paths=PackedStringArray("roundManager")]
 script = ExtResource("1_17y0f")
-roundManager = NodePath("RoundManager")
-
-[node name="RoundManager" type="Node" parent="." node_paths=PackedStringArray("blindsManager", "dealer", "bettingManager")]
-script = ExtResource("2_06j78")
-blindsManager = NodePath("BlindsManager")
-dealer = NodePath("Dealer")
-bettingManager = NodePath("BettingManager")
-
-[node name="BlindsManager" type="Node" parent="RoundManager"]
-script = ExtResource("3_17y0f")
-
-[node name="Dealer" parent="RoundManager" instance=ExtResource("4_06j78")]
-visible = false
-
-[node name="BettingManager" type="Node" parent="RoundManager"]
-script = ExtResource("5_lnuoh")
+roundManager = NodePath("")

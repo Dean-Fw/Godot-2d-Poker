@@ -15,7 +15,7 @@ public partial class BettingManager : Node
         bettingPlayers = players;
 
         StartPlayerTurn(
-                bettingPlayers.First(p => p.Blinds.Contains(Blind.UnderTheGun))
+            bettingPlayers.First(p => p.Blinds.Contains(Blind.UnderTheGun))
         );
     }
 
@@ -39,6 +39,9 @@ public partial class BettingManager : Node
 
         if (player.CurrentBet.Value > minimumBet)
             minimumBet = player.CurrentBet.Value;
+
+        if (player.Folded)
+            bettingPlayers.Remove(player);
 
         var nextPlayer = bettingPlayers.GetNext(player);
 

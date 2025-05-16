@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6f20t3dpqog2"]
+[gd_scene load_steps=7 format=3 uid="uid://b6f20t3dpqog2"]
 
 [ext_resource type="PackedScene" uid="uid://t7tnfucgk71d" path="res://Scenes/Game/GameManager/GameManager.tscn" id="1_m1o7v"]
+[ext_resource type="PackedScene" uid="uid://bfk832s1exctq" path="res://Scenes/Game/RoundManager/RoundManager.tscn" id="2_3k6gv"]
 [ext_resource type="PackedScene" uid="uid://cd6dmqn4vash3" path="res://Scenes/Player/HumanPlayer/HumanPlayer.tscn" id="2_j5yw3"]
+[ext_resource type="Script" uid="uid://b7ven33g6gs0b" path="res://Scenes/Game/CommunityCards.cs" id="2_y3kpf"]
 [ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/Game/PlayerParent.cs" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://c4yif41brjlrw" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.tscn" id="3_j5yw3"]
 
@@ -13,8 +15,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameManager" parent="." node_paths=PackedStringArray("playerParent") instance=ExtResource("1_m1o7v")]
+[node name="GameManager" parent="." node_paths=PackedStringArray("playerParent", "roundManager") instance=ExtResource("1_m1o7v")]
 playerParent = NodePath("../Table/PlayerParent")
+roundManager = NodePath("RoundManager")
+
+[node name="RoundManager" parent="GameManager" node_paths=PackedStringArray("communityCards") instance=ExtResource("2_3k6gv")]
+communityCards = NodePath("../../Table/TableCenter/CommunityCards")
 
 [node name="Table" type="ColorRect" parent="."]
 layout_mode = 1
@@ -41,6 +47,7 @@ metadata/_edit_use_anchors_ = true
 [node name="CommunityCards" type="HBoxContainer" parent="Table/TableCenter"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("2_y3kpf")
 
 [node name="PlayerParent" type="Control" parent="Table"]
 layout_mode = 3

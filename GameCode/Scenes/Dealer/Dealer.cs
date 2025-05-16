@@ -1,5 +1,4 @@
 using Godot;
-using System.Collections.Generic;
 using System;
 
 public partial class Dealer : Control
@@ -15,28 +14,17 @@ public partial class Dealer : Control
         AddChild(deck);
     }
 
-    public void DealToCommunityCards(int cardsToDeal)
+    public void Deal(Node target, int numberOfCards)
     {
-        for (int cardsDealt = 0; cardsDealt < cardsToDeal; cardsDealt++)
+        for (var cardsDealt = 0; cardsDealt < numberOfCards; cardsDealt++)
         {
             var card = GetCard();
-            card.FlipCard();
 
-            communityCardsContianer.AddChild(
-                card
-            );
+            if (target is HumanPlayer || target is CommunityCards)
+                card.FlipCard();
+
+            target.AddChild(card);
         }
-    }
-
-    public void DealToPlayers(List<Player> players)
-    {
-        foreach (var player in players)
-        {
-            player.HandContainer.AddChild(GetCard());
-
-            player.HandContainer.AddChild(GetCard());
-        }
-
     }
 
     private Card GetCard()
