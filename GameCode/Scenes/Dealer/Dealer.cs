@@ -1,11 +1,9 @@
 using Godot;
+using System;
 
 public partial class Dealer : Control
 {
     [Export] private PackedScene deckScene = null!;
-    [Export] private HBoxContainer communityCardsContianer = null!;
-    [Export] private PlayerParent playersParent = null!;
-    [Export] private RoundManager roundManager = null!;
 
     private Deck deck = null!;
 
@@ -13,62 +11,29 @@ public partial class Dealer : Control
     {
         deck = deckScene.Instantiate<Deck>();
         AddChild(deck);
-
-        playersParent.PlayersReady += () => HandlePlayersReady();
-
-        roundManager.RoundEnd += HandleRoundEnd;
     }
 
-    public void DealToCommunityCards(int cardsToDeal)
+    public void Deal(Node target, int numberOfCards)
     {
-        for (int cardsDealt = 0; cardsDealt < cardsToDeal; cardsDealt++)
+        for (var cardsDealt = 0; cardsDealt < numberOfCards; cardsDealt++)
         {
             var card = GetCard();
-            card.FlipCard();
 
-            communityCardsContianer.AddChild(
-                card
-            );
+            if (target is HumanPlayer || target is CommunityCards)
+                card.FlipCard();
+
+            target.AddChild(card);
         }
-    }
-
-    public void DealHandToPlayer(Player player)
-    {
-        player.HandContainer.AddChild(
-                GetCard()
-        );
-
-        player.HandContainer.AddChild(
-                GetCard()
-        );
-    }
-
-    private void HandlePlayersReady()
-    {
-        // get all players from the players node and listen to their trun end signal
-        foreach (var player in playersParent.Players)
-        {
-            DealHandToPlayer(player);
-        }
-    }
-
-    private void HandleRoundEnd(RoundPhase nextRoundPhase)
-    {
-        if (nextRoundPhase == RoundPhase.ShowDown)
-            return;
-
-        if (nextRoundPhase == RoundPhase.Flop)
-        {
-            DealToCommunityCards(3);
-            return;
-        }
-
-        DealToCommunityCards(1);
     }
 
     private Card GetCard()
     {
-        var card = deck.GetChild<Card>(0);
+        var random = new Random();
+
+        var card = deck.GetChild<Card>(
+            random.Next(0, deck.GetChildren().Count)
+        );
+
         deck.RemoveChild(card);
 
         return card;

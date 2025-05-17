@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_60v3t"]
 
 [node name="Pot" type="Control" node_paths=PackedStringArray("ChipCount")]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

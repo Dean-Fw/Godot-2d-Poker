@@ -1,102 +1,96 @@
 using Godot;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class RoundManager : Node
 {
-    [Export] private PlayerParent playersParent = null!;
     [Export] private BlindsManager blindsManager = null!;
+    [Export] private Dealer dealer = null!;
+    [Export] private BettingManager bettingManager = null!;
+    [Export] private TableCenter tableCenter = null!;
 
-    [Signal] public delegate void RoundEndEventHandler(RoundPhase nextPhase);
+    public int Ante { get; set; } = 10;
 
-    private int highestBet;
-    private RoundPhase currentRoundPhase;
+    private RoundPhase roundPhase;
+    private List<Player> playersInRound = [];
 
     public override void _Ready()
     {
-        playersParent.PlayersReady += () => HandlePlayersReady();
-        currentRoundPhase = RoundPhase.PreFlop;
+        bettingManager.BettingEnded += HandleBettingEnded;
     }
 
-    private void HandlePlayersReady()
+    public void StartGameRound(List<Player> players)
     {
-        blindsManager.SetBlinds(playersParent.Players.Count);
-        highestBet = blindsManager.Ante;
+        roundPhase = RoundPhase.PreFlop;
+        playersInRound = players;
 
-        playersParent.Players[blindsManager.Blinds.SmallBlind].GiveBlinds(blindsManager.Ante);
+        blindsManager.SetBlinds(playersInRound);
 
-        playersParent.Players[blindsManager.Blinds.BigBlind].GiveBlinds(blindsManager.Ante * 2);
+        players.First(p => p.Blinds.Contains(Blind.Dealer))
+            .AddDealerChip();
 
-        highestBet = blindsManager.Ante * 2;
+        blindsManager.GatherBlinds(playersInRound, Ante);
 
-        playersParent.Players[blindsManager.Blinds.Dealer].AddDealerChip();
-        StartRound();
+        foreach (var player in playersInRound)
+            dealer.Deal(player.HandContainer, 2);
+
+        bettingManager.StartBetting(playersInRound, Ante * 2);
     }
 
-    private void StartRound()
+    private void HandleBettingEnded(int remainingPlayers)
     {
-        StartPlayerTurn(playersParent.Players[blindsManager.Blinds.UnderTheGun]);
-    }
+        tableCenter.CollectChips(playersInRound);
 
-    private void StartPlayerTurn(Player player)
-    {
-        // Listen for when this player has finished their turn
-        player.TurnEnd += HandleTurnEnd;
-
-        // Tell them to begin their turn
-        player.StartTurn(highestBet);
-    }
-
-    private void HandleTurnEnd(Player player)
-    {
-        // Stop Listening to THIS player about them finishing their turn
-        player.TurnEnd -= HandleTurnEnd;
-
-        if (playersParent.Players.Count == 1)
+        if (remainingPlayers == 1)
         {
-            GD.Print("Game ended as only one player left");
+            GD.Print("Round Over: 1 Player Left");
             return;
         }
 
-        if (player.CurrentBet.Value > highestBet)
-            highestBet = player.CurrentBet.Value;
-
-        //Pick the next player
-        var nextPlayer = playersParent.GetNextUnfoldedPlayer(player);
-
-        // If the next player has not matched the highest bet then they have to act
-        // TODO This needs to be changed to include cases where the table has checked (Bet will be 0)
-        // Possibly need to refactor turn management in to it's own node, breaching the S in SOLID here
-        if (nextPlayer.CurrentBet.Value != highestBet)
+        if (roundPhase == RoundPhase.River)
         {
-            StartPlayerTurn(nextPlayer);
+            GD.Print("Round Over: Got To the River");
             return;
         }
 
-        // end the round
-        EndRound();
+        roundPhase++;
+
+        if (roundPhase == RoundPhase.Flop)
+            dealer.Deal(tableCenter.CommunityCards, 3);
+        else
+            dealer.Deal(tableCenter.CommunityCards, 1);
+
+        // First unfolded player to the right of the dealer 
+        var dealerPlayer = playersInRound.First(p => p.Blinds.Contains(Blind.Dealer));
+        var next = playersInRound.GetNextUnfoldedPlayer(dealerPlayer);
+
+        foreach (var player in playersInRound)
+            player.Acted = false;
+
+        bettingManager.ContinueBetting(next);
     }
 
-    private void EndRound()
-    {
-        // end this cycle of the game if the river round has finished (for now) 
-        if (currentRoundPhase == RoundPhase.River)
-        {
-            EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(RoundPhase.ShowDown));
 
-            GD.Print("Game Ended");
-            return;
-        }
-
-        // Move the round on
-        currentRoundPhase = currentRoundPhase + 1;
-
-        // Signal the round has ended and the round we are going to
-        EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(currentRoundPhase));
-
-        // Reset betting
-        highestBet = 0;
-
-        StartRound();
-
-    }
-
+    //private void EndRound()
+    //{
+    //// end this cycle of the game if the river round has finished (for now) 
+    //if (currentRoundPhase == RoundPhase.River)
+    //{
+    //EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(RoundPhase.ShowDown));
+    //
+    //GD.Print("Game Ended");
+    //return;
+    //}
+    //
+    //// Move the round on
+    //currentRoundPhase = currentRoundPhase + 1;
+    //
+    //// Signal the round has ended and the round we are going to
+    //EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(currentRoundPhase));
+    //
+    //// Reset betting
+    //highestBet = 0;
+    //
+    //StartRound();
+    //
 }
