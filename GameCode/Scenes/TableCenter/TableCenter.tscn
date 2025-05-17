@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://kq5f3ge3gt4t"]
+
+[ext_resource type="Script" uid="uid://dws2t61sstg7t" path="res://Scenes/TableCenter/TableCenter.cs" id="1_p5q4m"]
+[ext_resource type="PackedScene" uid="uid://cv8gtyr6520y3" path="res://Scenes/Pot/Pot.tscn" id="2_yskxw"]
+[ext_resource type="Script" uid="uid://6jw6vg1kodh6" path="res://Scenes/TableCenter/CommunityCards.cs" id="3_t1pof"]
+
+[node name="TableCenter" type="HBoxContainer" node_paths=PackedStringArray("CommunityCards")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 549.0
+offset_top = 385.0
+offset_right = -599.0
+offset_bottom = -435.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p5q4m")
+potScene = ExtResource("2_yskxw")
+CommunityCards = NodePath("CommunityCards")
+metadata/_edit_use_anchors_ = true
+
+[node name="CommunityCards" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(800, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_t1pof")

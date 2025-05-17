@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_otmmc"]
 [ext_resource type="PackedScene" uid="uid://20giuts1612a" path="res://Scenes/Player/Bet/Bet.tscn" id="3_bqlnp"]
 
-[node name="ComputerPlayer" type="VBoxContainer" node_paths=PackedStringArray("HandContainer", "chipCounter", "roundInformation", "BlindsLabel")]
+[node name="ComputerPlayer" type="VBoxContainer" node_paths=PackedStringArray("HandContainer", "chipCounter", "RoundInformation", "BlindsLabel")]
 anchors_preset = -1
 anchor_right = 0.337
 anchor_bottom = 0.297
@@ -18,7 +18,7 @@ script = ExtResource("1_uuaa5")
 HandContainer = NodePath("PlayerContainer2/PlayerPanel/PlayerInformation/InformationMargin/Information/Hand")
 chipCounter = NodePath("PlayerContainer2/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips/ChipCount")
 betScene = ExtResource("3_bqlnp")
-roundInformation = NodePath("PlayerContainer2/RoundInformation")
+RoundInformation = NodePath("PlayerContainer2/RoundInformation")
 BlindsLabel = NodePath("PlayerContainer2/RoundInformation/Blind")
 
 [node name="PlayerContainer2" type="VBoxContainer" parent="."]

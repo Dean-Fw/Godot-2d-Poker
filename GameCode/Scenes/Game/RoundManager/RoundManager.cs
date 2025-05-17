@@ -7,7 +7,7 @@ public partial class RoundManager : Node
     [Export] private BlindsManager blindsManager = null!;
     [Export] private Dealer dealer = null!;
     [Export] private BettingManager bettingManager = null!;
-    [Export] private CommunityCards communityCards = null!;
+    [Export] private TableCenter tableCenter = null!;
 
     public int Ante { get; set; } = 10;
 
@@ -16,7 +16,7 @@ public partial class RoundManager : Node
 
     public override void _Ready()
     {
-        bettingManager.BettingEnded += () => HandleBettingEnded();
+        bettingManager.BettingEnded += HandleBettingEnded;
     }
 
     public void StartGameRound(List<Player> players)
@@ -37,24 +37,35 @@ public partial class RoundManager : Node
         bettingManager.StartBetting(playersInRound, Ante * 2);
     }
 
-    private void HandleBettingEnded()
+    private void HandleBettingEnded(int remainingPlayers)
     {
+        tableCenter.CollectChips(playersInRound);
+
+        if (remainingPlayers == 1)
+        {
+            GD.Print("Round Over: 1 Player Left");
+            return;
+        }
+
         if (roundPhase == RoundPhase.River)
         {
-            GD.Print("Round Over");
+            GD.Print("Round Over: Got To the River");
             return;
         }
 
         roundPhase++;
 
         if (roundPhase == RoundPhase.Flop)
-            dealer.Deal(communityCards, 3);
+            dealer.Deal(tableCenter.CommunityCards, 3);
         else
-            dealer.Deal(communityCards, 1);
+            dealer.Deal(tableCenter.CommunityCards, 1);
 
         // First unfolded player to the right of the dealer 
         var dealerPlayer = playersInRound.First(p => p.Blinds.Contains(Blind.Dealer));
         var next = playersInRound.GetNextUnfoldedPlayer(dealerPlayer);
+
+        foreach (var player in playersInRound)
+            player.Acted = false;
 
         bettingManager.ContinueBetting(next);
     }
@@ -83,4 +94,3 @@ public partial class RoundManager : Node
     //StartRound();
     //
 }
-

@@ -4,7 +4,6 @@ using System;
 public partial class Dealer : Control
 {
     [Export] private PackedScene deckScene = null!;
-    [Export] private HBoxContainer communityCardsContianer = null!;
 
     private Deck deck = null!;
 

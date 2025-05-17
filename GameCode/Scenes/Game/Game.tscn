@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://t7tnfucgk71d" path="res://Scenes/Game/GameManager/GameManager.tscn" id="1_m1o7v"]
 [ext_resource type="PackedScene" uid="uid://bfk832s1exctq" path="res://Scenes/Game/RoundManager/RoundManager.tscn" id="2_3k6gv"]
 [ext_resource type="PackedScene" uid="uid://cd6dmqn4vash3" path="res://Scenes/Player/HumanPlayer/HumanPlayer.tscn" id="2_j5yw3"]
-[ext_resource type="Script" uid="uid://b7ven33g6gs0b" path="res://Scenes/Game/CommunityCards.cs" id="2_y3kpf"]
+[ext_resource type="PackedScene" uid="uid://kq5f3ge3gt4t" path="res://Scenes/TableCenter/TableCenter.tscn" id="3_3k6gv"]
 [ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/Game/PlayerParent.cs" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://c4yif41brjlrw" path="res://Scenes/Player/ComputerPlayer/ComputerPlayer.tscn" id="3_j5yw3"]
 
@@ -19,8 +19,8 @@ grow_vertical = 2
 playerParent = NodePath("../Table/PlayerParent")
 roundManager = NodePath("RoundManager")
 
-[node name="RoundManager" parent="GameManager" node_paths=PackedStringArray("communityCards") instance=ExtResource("2_3k6gv")]
-communityCards = NodePath("../../Table/TableCenter/CommunityCards")
+[node name="RoundManager" parent="GameManager" node_paths=PackedStringArray("tableCenter") instance=ExtResource("2_3k6gv")]
+tableCenter = NodePath("../../Table/TableCenter")
 
 [node name="Table" type="ColorRect" parent="."]
 layout_mode = 1
@@ -31,23 +31,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(5.6313e-06, 0.624757, 0, 1)
 
-[node name="TableCenter" type="HBoxContainer" parent="Table"]
+[node name="TableCenter" parent="Table" instance=ExtResource("3_3k6gv")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 549.0
-offset_top = 385.0
-offset_right = -599.0
-offset_bottom = -435.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="CommunityCards" type="HBoxContainer" parent="Table/TableCenter"]
-layout_mode = 2
-size_flags_horizontal = 3
-script = ExtResource("2_y3kpf")
+anchors_preset = -1
+offset_left = 710.0
+offset_top = 415.0
+offset_right = -710.0
+offset_bottom = -415.0
 
 [node name="PlayerParent" type="Control" parent="Table"]
 layout_mode = 3

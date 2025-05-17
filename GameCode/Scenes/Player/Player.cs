@@ -8,7 +8,7 @@ public partial class Player : Control
     [Export] private Label chipCounter = null!;
 
     [Export] private PackedScene betScene = null!;
-    [Export] private HBoxContainer roundInformation = null!;
+    [Export] public HBoxContainer RoundInformation = null!;
     [Export] private Label BlindsLabel = null!;
 
     [Signal] public delegate void TurnEndEventHandler(Player player);
@@ -18,6 +18,8 @@ public partial class Player : Control
     public Bet CurrentBet { get; private set; } = null!;
 
     public bool Folded { get; private set; }
+
+    public bool Acted { get; set; }
 
     public List<Blind> Blinds { get; set; } = [];
 
@@ -34,11 +36,6 @@ public partial class Player : Control
         BlindsLabel.Text = "D";
     }
 
-    public void AddChipsToPot()
-    {
-        roundInformation.RemoveChild(CurrentBet);
-        CurrentBet.ClearBet();
-    }
 
     public void GiveBlinds(int blind)
     {
@@ -53,12 +50,13 @@ public partial class Player : Control
 
     public virtual void StartTurn(int minimumBet)
     {
-        amountToCall = minimumBet - CurrentBet.Value;
+        amountToCall = minimumBet - CurrentBet.Value < 0 ? 0 : minimumBet - CurrentBet.Value;
     }
 
     // Signal to end this players turn	
     protected void MoveNext()
     {
+        Acted = true;
         EmitSignal(SignalName.TurnEnd, this);
     }
 
@@ -87,9 +85,9 @@ public partial class Player : Control
         SetChipCount(ChipCount - value);
         CurrentBet.AddChips(value);
 
-        if (!roundInformation.ContainsChildOfType<Bet>())
+        if (!RoundInformation.ContainsChildOfType<Bet>())
         {
-            roundInformation.AddChild(CurrentBet);
+            RoundInformation.AddChild(CurrentBet);
         }
     }
 

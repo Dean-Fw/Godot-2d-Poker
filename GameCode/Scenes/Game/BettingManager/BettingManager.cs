@@ -7,13 +7,13 @@ public partial class BettingManager : Node
     private int minimumBet;
     private List<Player> bettingPlayers = [];
 
-    [Signal] public delegate void BettingEndedEventHandler();
+    [Signal] public delegate void BettingEndedEventHandler(int playersRemaining);
 
     public void StartBetting(List<Player> players, int ante)
     {
         minimumBet = ante;
-        bettingPlayers = players;
-
+        bettingPlayers.AddRange(players);
+        GD.Print($"Count at bettingStart: {bettingPlayers.Count}");
         StartPlayerTurn(
             bettingPlayers.First(p => p.Blinds.Contains(Blind.UnderTheGun))
         );
@@ -43,24 +43,31 @@ public partial class BettingManager : Node
         if (player.Folded)
             bettingPlayers.Remove(player);
 
-        var nextPlayer = bettingPlayers.GetNext(player);
-
-        // In an opening round of calls, if the big blind has not had thier turn they may raise or check)
-        if (nextPlayer.CurrentBet.Value == minimumBet && nextPlayer.Blinds.Contains(Blind.BigBlind))
+        if (bettingPlayers.Count == 1)
         {
-            // Remove the player's BigBlind status as it could  retrigger this check and will not be needed again this round
-            nextPlayer.Blinds.Remove(Blind.BigBlind);
-            StartPlayerTurn(nextPlayer);
+            EmitSignal(SignalName.BettingEnded, bettingPlayers.Count);
             return;
         }
 
-        if (nextPlayer.CurrentBet.Value < minimumBet || (!player.Blinds.Contains(Blind.Dealer) && minimumBet == 0))
+        var allPlayersCalled = bettingPlayers
+            .Where(p => p.CurrentBet.Value == minimumBet).ToList().Count == bettingPlayers.Count;
+
+        var allPlayersActed = bettingPlayers.Where(p => p.Acted).ToList().Count == bettingPlayers.Count;
+
+
+        GD.Print($"Everyone has acted: {allPlayersActed}, everyone has called: {allPlayersCalled}");
+
+        if (allPlayersCalled && allPlayersActed)
         {
-            StartPlayerTurn(nextPlayer);
+            EmitSignal(SignalName.BettingEnded, bettingPlayers.Count);
             return;
         }
 
-        EmitSignal(SignalName.BettingEnded);
+        else
+        {
+            StartPlayerTurn(bettingPlayers.GetNext(player));
+            return;
+        }
     }
 
 }

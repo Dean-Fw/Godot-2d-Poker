@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://20giuts1612a" path="res://Scenes/Player/Bet/Bet.tscn" id="3_wufwl"]
 [ext_resource type="Script" uid="uid://0f4dngkmf8ny" path="res://Scenes/Player/HumanPlayer/ActionsContainer/ActionsContainer.cs" id="4_wufwl"]
 
-[node name="HumanPlayer" type="VBoxContainer" node_paths=PackedStringArray("actionsContainer", "HandContainer", "chipCounter", "roundInformation", "BlindsLabel")]
+[node name="HumanPlayer" type="VBoxContainer" node_paths=PackedStringArray("actionsContainer", "HandContainer", "chipCounter", "RoundInformation", "BlindsLabel")]
 anchors_preset = -1
 anchor_right = 0.337
 anchor_bottom = 0.297
@@ -20,7 +20,7 @@ actionsContainer = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/Actio
 HandContainer = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/Hand")
 chipCounter = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips/ChipCount")
 betScene = ExtResource("3_wufwl")
-roundInformation = NodePath("PlayerContainer/RoundInformation")
+RoundInformation = NodePath("PlayerContainer/RoundInformation")
 BlindsLabel = NodePath("PlayerContainer/RoundInformation/Blind")
 
 [node name="PlayerContainer" type="VBoxContainer" parent="."]
