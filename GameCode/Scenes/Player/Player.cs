@@ -48,6 +48,12 @@ public partial class Player : Control
         chipCounter.Text = $"Chips: {ChipCount}";
     }
 
+    public void AddChips(int value)
+    {
+        ChipCount = value;
+        chipCounter.Text = $"Chips: {ChipCount}";
+    }
+
     public virtual void StartTurn(int minimumBet)
     {
         amountToCall = minimumBet - CurrentBet.Value < 0 ? 0 : minimumBet - CurrentBet.Value;

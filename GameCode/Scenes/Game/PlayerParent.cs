@@ -19,9 +19,21 @@ public partial class PlayerParent : Control
         EmitSignal(SignalName.PlayersReady);
     }
 
+    public void RemoveBustPlayers()
+    {
+        var bustPlayers = new List<Player>(Players.Where(p => p.ChipCount <= 0));
+
+        foreach (var player in bustPlayers)
+        {
+            RemoveChild(player);
+            Players.Remove(player);
+        }
+    }
+
     private void GiveInitialChips(int value)
     {
         foreach (var player in Players)
             player.SetChipCount(value);
     }
+
 }

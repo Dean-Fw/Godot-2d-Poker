@@ -7,7 +7,7 @@ public partial class BettingManager : Node
     private int minimumBet;
     private List<Player> bettingPlayers = [];
 
-    [Signal] public delegate void BettingEndedEventHandler(int playersRemaining);
+    [Signal] public delegate void BettingEndedEventHandler(Player[] playersRemaining);
 
     public void StartBetting(List<Player> players, int ante)
     {
@@ -45,7 +45,7 @@ public partial class BettingManager : Node
 
         if (bettingPlayers.Count == 1)
         {
-            EmitSignal(SignalName.BettingEnded, bettingPlayers.Count);
+            EmitSignal(SignalName.BettingEnded, Variant.CreateFrom(bettingPlayers.ToArray()));
             return;
         }
 
@@ -59,7 +59,7 @@ public partial class BettingManager : Node
 
         if (allPlayersCalled && allPlayersActed)
         {
-            EmitSignal(SignalName.BettingEnded, bettingPlayers.Count);
+            EmitSignal(SignalName.BettingEnded, Variant.CreateFrom(bettingPlayers.ToArray()));
             return;
         }
 

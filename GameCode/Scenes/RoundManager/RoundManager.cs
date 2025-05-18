@@ -8,6 +8,9 @@ public partial class RoundManager : Node
     [Export] private Dealer dealer = null!;
     [Export] private BettingManager bettingManager = null!;
     [Export] private TableCenter tableCenter = null!;
+    [Export] private ShowDownManager showDownManager = null!;
+
+    [Signal] public delegate void RoundOverEventHandler();
 
     public int Ante { get; set; } = 10;
 
@@ -22,7 +25,7 @@ public partial class RoundManager : Node
     public void StartGameRound(List<Player> players)
     {
         roundPhase = RoundPhase.PreFlop;
-        playersInRound = players;
+        playersInRound.AddRange(players);
 
         blindsManager.SetBlinds(playersInRound);
 
@@ -37,19 +40,26 @@ public partial class RoundManager : Node
         bettingManager.StartBetting(playersInRound, Ante * 2);
     }
 
-    private void HandleBettingEnded(int remainingPlayers)
+    private void HandleBettingEnded(Player[] remainingPlayers)
     {
         tableCenter.CollectChips(playersInRound);
 
-        if (remainingPlayers == 1)
+        if (remainingPlayers.Count() == 1)
         {
-            GD.Print("Round Over: 1 Player Left");
+            tableCenter.GiveChipsTo(remainingPlayers[0]);
+
+            EmitSignal(SignalName.RoundOver);
+
             return;
         }
 
         if (roundPhase == RoundPhase.River)
         {
-            GD.Print("Round Over: Got To the River");
+            var winner = showDownManager.DetermineWinner(remainingPlayers);
+            tableCenter.GiveChipsTo(winner);
+
+            EmitSignal(SignalName.RoundOver);
+
             return;
         }
 
@@ -64,33 +74,10 @@ public partial class RoundManager : Node
         var dealerPlayer = playersInRound.First(p => p.Blinds.Contains(Blind.Dealer));
         var next = playersInRound.GetNextUnfoldedPlayer(dealerPlayer);
 
-        foreach (var player in playersInRound)
+        foreach (var player in remainingPlayers)
             player.Acted = false;
 
         bettingManager.ContinueBetting(next);
     }
 
-
-    //private void EndRound()
-    //{
-    //// end this cycle of the game if the river round has finished (for now) 
-    //if (currentRoundPhase == RoundPhase.River)
-    //{
-    //EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(RoundPhase.ShowDown));
-    //
-    //GD.Print("Game Ended");
-    //return;
-    //}
-    //
-    //// Move the round on
-    //currentRoundPhase = currentRoundPhase + 1;
-    //
-    //// Signal the round has ended and the round we are going to
-    //EmitSignal(SignalName.RoundEnd, Variant.From<RoundPhase>(currentRoundPhase));
-    //
-    //// Reset betting
-    //highestBet = 0;
-    //
-    //StartRound();
-    //
 }

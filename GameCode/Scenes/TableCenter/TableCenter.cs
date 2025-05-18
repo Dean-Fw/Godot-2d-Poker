@@ -30,8 +30,16 @@ public partial class TableCenter : Node
 
         }
 
-        GD.Print("POT COLLECTED");
-
         PotInstance.AddChips(potTotal);
+    }
+
+    public void GiveChipsTo(Player winner)
+    {
+        var potTotal = PotInstance.PotValue;
+
+        winner.AddChips(potTotal);
+
+        RemoveChild(PotInstance);
+        PotInstance = null!;
     }
 }
