@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bfk832s1exctq"]
 
-[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/Game/RoundManager/RoundManager.cs" id="1_kihim"]
-[ext_resource type="Script" uid="uid://2p2d3usaq47x" path="res://Scenes/Game/BlindsManager/BlindsManager.cs" id="2_rx0ry"]
+[ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/RoundManager/RoundManager.cs" id="1_kihim"]
+[ext_resource type="Script" uid="uid://2p2d3usaq47x" path="res://Scenes/RoundManager/Scripts/BlindsManager/BlindsManager.cs" id="2_rx0ry"]
 [ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="3_jjkx4"]
-[ext_resource type="Script" uid="uid://cuq31x1jy6dx1" path="res://Scenes/Game/BettingManager/BettingManager.cs" id="4_54fs3"]
+[ext_resource type="Script" uid="uid://cuq31x1jy6dx1" path="res://Scenes/RoundManager/Scripts/BettingManager/BettingManager.cs" id="4_54fs3"]
 
 [node name="RoundManager" type="Node" node_paths=PackedStringArray("blindsManager", "dealer", "bettingManager")]
 script = ExtResource("1_kihim")

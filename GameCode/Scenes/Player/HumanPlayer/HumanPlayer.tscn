@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ckidki47ew6uo" path="res://Scenes/Player/HumanPlayer/HumanPlayer.cs" id="1_ovyus"]
 [ext_resource type="Texture2D" uid="uid://b2vgtewndstxd" path="res://Assets/poker_chip.jpg" id="2_ft8w5"]
-[ext_resource type="PackedScene" uid="uid://20giuts1612a" path="res://Scenes/Player/Bet/Bet.tscn" id="3_wufwl"]
+[ext_resource type="PackedScene" uid="uid://20giuts1612a" path="res://Scenes/Bet/Bet.tscn" id="3_wufwl"]
 [ext_resource type="Script" uid="uid://0f4dngkmf8ny" path="res://Scenes/Player/HumanPlayer/ActionsContainer/ActionsContainer.cs" id="4_wufwl"]
 
 [node name="HumanPlayer" type="VBoxContainer" node_paths=PackedStringArray("actionsContainer", "HandContainer", "chipCounter", "RoundInformation", "BlindsLabel")]
