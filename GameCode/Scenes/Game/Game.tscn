@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b6f20t3dpqog2"]
 
-[ext_resource type="PackedScene" uid="uid://t7tnfucgk71d" path="res://Scenes/Game/GameManager/GameManager.tscn" id="1_m1o7v"]
-[ext_resource type="PackedScene" uid="uid://bfk832s1exctq" path="res://Scenes/Game/RoundManager/RoundManager.tscn" id="2_3k6gv"]
+[ext_resource type="PackedScene" uid="uid://t7tnfucgk71d" path="res://Scenes/GameManager/GameManager.tscn" id="1_m1o7v"]
+[ext_resource type="PackedScene" uid="uid://bfk832s1exctq" path="res://Scenes/RoundManager/RoundManager.tscn" id="2_3k6gv"]
 [ext_resource type="PackedScene" uid="uid://cd6dmqn4vash3" path="res://Scenes/Player/HumanPlayer/HumanPlayer.tscn" id="2_j5yw3"]
 [ext_resource type="PackedScene" uid="uid://kq5f3ge3gt4t" path="res://Scenes/TableCenter/TableCenter.tscn" id="3_3k6gv"]
 [ext_resource type="Script" uid="uid://cylgwtt613i8o" path="res://Scenes/Game/PlayerParent.cs" id="3_b2bpf"]
