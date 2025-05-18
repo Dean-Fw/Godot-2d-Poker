@@ -7,8 +7,14 @@ public partial class Dealer : Control
 
     private Deck deck = null!;
 
-    public override void _Ready()
+    public void ReadyDeck()
     {
+        if (deck != null)
+        {
+            deck.QueueFree();
+            deck = null!;
+        }
+
         deck = deckScene.Instantiate<Deck>();
         AddChild(deck);
     }

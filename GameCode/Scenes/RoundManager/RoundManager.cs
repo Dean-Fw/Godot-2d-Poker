@@ -24,8 +24,11 @@ public partial class RoundManager : Node
 
     public void StartGameRound(List<Player> players)
     {
+        playersInRound = [];
         roundPhase = RoundPhase.PreFlop;
         playersInRound.AddRange(players);
+
+        ReadyTable();
 
         blindsManager.SetBlinds(playersInRound);
 
@@ -78,6 +81,16 @@ public partial class RoundManager : Node
             player.Acted = false;
 
         bettingManager.ContinueBetting(next);
+    }
+
+    private void ReadyTable()
+    {
+        tableCenter.CommunityCards.Clear();
+
+        foreach (var player in playersInRound)
+            player.HandContainer.Clear();
+
+        dealer.ReadyDeck();
     }
 
 }
