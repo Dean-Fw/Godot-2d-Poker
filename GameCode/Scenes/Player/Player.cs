@@ -50,7 +50,7 @@ public partial class Player : Control
 
     public void AddChips(int value)
     {
-        ChipCount = value;
+        ChipCount += value;
         chipCounter.Text = $"Chips: {ChipCount}";
     }
 

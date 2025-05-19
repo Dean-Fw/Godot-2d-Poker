@@ -2,11 +2,15 @@
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2d-Poker", "2d-Poker.csproj", "{371E1E6B-EF55-487C-83D0-993CB14A9775}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{5D59B4C7-B8CB-467C-AF54-4EC513E3DADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionsTests", "Extensions\ExtensionsTests\ExtensionsTests.csproj", "{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{371E1E6B-EF55-487C-83D0-993CB14A9775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -15,5 +19,14 @@ Global
 		{371E1E6B-EF55-487C-83D0-993CB14A9775}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
 		{371E1E6B-EF55-487C-83D0-993CB14A9775}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{371E1E6B-EF55-487C-83D0-993CB14A9775}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC2DBFA1-D491-41BB-BFBF-20B2DF7E6B76} = {5D59B4C7-B8CB-467C-AF54-4EC513E3DADC}
 	EndGlobalSection
 EndGlobal

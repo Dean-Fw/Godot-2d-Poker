@@ -13,7 +13,7 @@ public partial class BettingManager : Node
     {
         minimumBet = ante;
         bettingPlayers.AddRange(players);
-        GD.Print($"Count at bettingStart: {bettingPlayers.Count}");
+
         StartPlayerTurn(
             bettingPlayers.First(p => p.Blinds.Contains(Blind.UnderTheGun))
         );
@@ -40,22 +40,18 @@ public partial class BettingManager : Node
         if (player.CurrentBet.Value > minimumBet)
             minimumBet = player.CurrentBet.Value;
 
-        if (player.Folded)
-            bettingPlayers.Remove(player);
-
-        if (bettingPlayers.Count == 1)
-        {
-            EmitSignal(SignalName.BettingEnded, Variant.CreateFrom(bettingPlayers.ToArray()));
-            return;
-        }
 
         var allPlayersCalled = bettingPlayers
             .Where(p => p.CurrentBet.Value == minimumBet).ToList().Count == bettingPlayers.Count;
 
         var allPlayersActed = bettingPlayers.Where(p => p.Acted).ToList().Count == bettingPlayers.Count;
 
-
         GD.Print($"Everyone has acted: {allPlayersActed}, everyone has called: {allPlayersCalled}");
+
+        var next = bettingPlayers.GetNextNonBustPlayer(player);
+
+        if (player.Folded)
+            bettingPlayers.Remove(player);
 
         if (allPlayersCalled && allPlayersActed)
         {
@@ -63,11 +59,20 @@ public partial class BettingManager : Node
             return;
         }
 
-        else
+        if (bettingPlayers.Count == 1)
         {
-            StartPlayerTurn(bettingPlayers.GetNext(player));
+            EmitSignal(SignalName.BettingEnded, Variant.CreateFrom(bettingPlayers.ToArray()));
             return;
         }
+
+        if (next != null)
+        {
+            StartPlayerTurn(next);
+            return;
+        }
+
+        EmitSignal(SignalName.BettingEnded, Variant.CreateFrom(bettingPlayers.ToArray()));
+        return;
     }
 
 }

@@ -39,7 +39,7 @@ public partial class TableCenter : Node
 
         winner.AddChips(potTotal);
 
-        RemoveChild(PotInstance);
+        PotInstance.QueueFree();
         PotInstance = null!;
     }
 }
