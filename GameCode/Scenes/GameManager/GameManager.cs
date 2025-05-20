@@ -22,6 +22,7 @@ public partial class GameManager : Node
 
         if (playerParent.Players.Count > 1)
         {
+            GD.Print("NEW ROUND");
             StartGame();
             return;
         }

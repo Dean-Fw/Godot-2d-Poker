@@ -34,10 +34,10 @@ color = Color(5.6313e-06, 0.624757, 0, 1)
 [node name="TableCenter" parent="Table" instance=ExtResource("3_3k6gv")]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 710.0
-offset_top = 415.0
-offset_right = -710.0
-offset_bottom = -415.0
+offset_left = 762.0
+offset_top = 435.0
+offset_right = -358.0
+offset_bottom = -395.0
 
 [node name="PlayerParent" type="Control" parent="Table"]
 layout_mode = 3

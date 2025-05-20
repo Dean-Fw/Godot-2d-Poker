@@ -24,7 +24,8 @@ public partial class RoundManager : Node
 
     public void StartGameRound(List<Player> players)
     {
-        playersInRound = [];
+        playersInRound.Clear();
+
         roundPhase = RoundPhase.PreFlop;
         playersInRound.AddRange(players);
 
@@ -51,6 +52,8 @@ public partial class RoundManager : Node
         {
             tableCenter.GiveChipsTo(remainingPlayers[0]);
 
+            GD.Print($"WINNER (LAST PLAYER): {remainingPlayers[0].Name}");
+
             EmitSignal(SignalName.RoundOver);
 
             return;
@@ -61,6 +64,8 @@ public partial class RoundManager : Node
         {
             var winner = showDownManager.DetermineWinner(remainingPlayers);
             tableCenter.GiveChipsTo(winner);
+
+            GD.Print($"WINNER (SHOWDOWN): {winner.Name}");
 
             EmitSignal(SignalName.RoundOver);
 
@@ -89,7 +94,11 @@ public partial class RoundManager : Node
         tableCenter.CommunityCards.Clear();
 
         foreach (var player in playersInRound)
+        {
             player.HandContainer.Clear();
+            player.Folded = false;
+            player.Blinds.Clear();
+        }
 
         dealer.ReadyDeck();
     }

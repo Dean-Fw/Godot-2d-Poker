@@ -20,7 +20,7 @@ public partial class TableCenter : Node
 
             potTotal += player.CurrentBet.Value;
 
-            player.RoundInformation.RemoveChild(player.CurrentBet);
+            player.CurrentBet.ClearBet();
 
             if (PotInstance == null)
             {
@@ -35,9 +35,7 @@ public partial class TableCenter : Node
 
     public void GiveChipsTo(Player winner)
     {
-        var potTotal = PotInstance.PotValue;
-
-        winner.AddChips(potTotal);
+        winner.AddChips(PotInstance.PotValue);
 
         PotInstance.QueueFree();
         PotInstance = null!;

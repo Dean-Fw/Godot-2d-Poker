@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using System;
-using Godot;
 
 public static class ListExtensions
 {
@@ -10,18 +7,17 @@ public static class ListExtensions
         return input.IndexOf(current) + 1 >= input.Count ? input[0] : input[input.IndexOf(current) + 1];
     }
 
-    public static Player GetNextUnfoldedPlayer(this List<Player> players, Player currentPlayer)
+    public static Player? GetNextUnfoldedPlayer(this List<Player> players, Player currentPlayer)
     {
         var searchableList = CreateSearchableList(players, currentPlayer);
 
         foreach (var player in searchableList)
         {
-            GD.Print(player.Name);
             if (!player.Folded)
                 return player;
         }
 
-        throw new Exception("There cannot be a case where every player has folded");
+        return null;
     }
 
     public static Player? GetNextNonBustPlayer(this List<Player> players, Player currentPlayer)
@@ -47,7 +43,6 @@ public static class ListExtensions
         // [0, 1, 2, 3, 4]
         //     ^
         var indexOfCurrentPlayer = players.IndexOf(currentPlayer);
-        GD.Print(indexOfCurrentPlayer);
         // [0, 1, 2, 3, 4], [2, 3, 4]
         // Take a slice of the current index to the end of list and then start to the index of player -1
         var searchableList = players.Slice(indexOfCurrentPlayer + 1, players.Count - 1 - indexOfCurrentPlayer);

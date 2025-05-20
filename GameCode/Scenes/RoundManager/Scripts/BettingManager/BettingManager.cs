@@ -12,6 +12,7 @@ public partial class BettingManager : Node
     public void StartBetting(List<Player> players, int ante)
     {
         minimumBet = ante;
+        bettingPlayers.Clear();
         bettingPlayers.AddRange(players);
 
         StartPlayerTurn(

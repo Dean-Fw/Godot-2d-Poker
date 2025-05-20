@@ -25,7 +25,7 @@ public partial class PlayerParent : Control
 
         foreach (var player in bustPlayers)
         {
-            RemoveChild(player);
+            player.QueueFree();
             Players.Remove(player);
         }
     }

@@ -4,9 +4,7 @@ using System.Collections.Generic;
 public partial class Player : Control
 {
     [Export] public HBoxContainer HandContainer = null!;
-
     [Export] private Label chipCounter = null!;
-
     [Export] private PackedScene betScene = null!;
     [Export] public HBoxContainer RoundInformation = null!;
     [Export] private Label BlindsLabel = null!;
@@ -17,7 +15,7 @@ public partial class Player : Control
 
     public Bet CurrentBet { get; private set; } = null!;
 
-    public bool Folded { get; private set; }
+    public bool Folded { get; set; }
 
     public bool Acted { get; set; }
 
@@ -35,7 +33,6 @@ public partial class Player : Control
     {
         BlindsLabel.Text = "D";
     }
-
 
     public void GiveBlinds(int blind)
     {
@@ -56,7 +53,7 @@ public partial class Player : Control
 
     public virtual void StartTurn(int minimumBet)
     {
-        amountToCall = minimumBet - CurrentBet.Value < 0 ? 0 : minimumBet - CurrentBet.Value;
+        amountToCall = ChipCount - minimumBet < 0 ? 0 : minimumBet - CurrentBet.Value;
     }
 
     // Signal to end this players turn	

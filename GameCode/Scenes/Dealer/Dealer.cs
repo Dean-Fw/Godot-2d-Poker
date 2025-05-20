@@ -25,8 +25,10 @@ public partial class Dealer : Control
         {
             var card = GetCard();
 
-            if (target is HumanPlayer || target is CommunityCards)
+            if (target is CommunityCards)
+            {
                 card.FlipCard();
+            }
 
             target.AddChild(card);
         }
