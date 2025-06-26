@@ -26,7 +26,7 @@ public static class ListExtensions
 
         foreach (var player in searchableList)
         {
-            if (player.ChipCount != 0)
+            if (player.ChipCount > 0)
                 return player;
         }
 

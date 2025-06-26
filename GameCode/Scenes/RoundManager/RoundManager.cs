@@ -80,7 +80,8 @@ public partial class RoundManager : Node
             dealer.Deal(tableCenter.CommunityCards, 1);
 
         // First unfolded player to the right of the dealer 
-        var dealerPlayer = playersInRound.First(p => p.Blinds.Contains(Blind.Dealer));
+        var dealerPlayer = playersInRound.First(p => p.Blinds.Contains(Blind.Dealer)); 
+        // TODO: Shouldn't be from the dealer should be from the last player to call
         var next = playersInRound.GetNextUnfoldedPlayer(dealerPlayer);
 
         foreach (var player in remainingPlayers)
