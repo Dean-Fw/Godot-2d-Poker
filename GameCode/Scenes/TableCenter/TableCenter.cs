@@ -20,7 +20,7 @@ public partial class TableCenter : Node
 
             potTotal += player.CurrentBet.Value;
 
-            player.RoundInformation.RemoveChild(player.CurrentBet);
+            player.CurrentBet.ClearBet();
 
             if (PotInstance == null)
             {
@@ -30,8 +30,14 @@ public partial class TableCenter : Node
 
         }
 
-        GD.Print("POT COLLECTED");
-
         PotInstance.AddChips(potTotal);
+    }
+
+    public void GiveChipsTo(Player winner)
+    {
+        winner.AddChips(PotInstance.PotValue);
+
+        PotInstance.QueueFree();
+        PotInstance = null!;
     }
 }

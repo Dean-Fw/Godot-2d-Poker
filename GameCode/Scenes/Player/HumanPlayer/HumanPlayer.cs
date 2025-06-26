@@ -5,8 +5,6 @@ public partial class HumanPlayer : Player
 {
     [Export] private ActionsContainer actionsContainer = null!;
 
-    private bool cardsFlipped = false;
-
     public override void _Ready()
     {
         base._Ready();
@@ -19,13 +17,9 @@ public partial class HumanPlayer : Player
     {
         base.StartTurn(minimumBet);
 
-        if (!cardsFlipped)
+        foreach (var card in HandContainer.GetChildren().OfType<Card>())
         {
-            foreach (var card in HandContainer.GetChildren().OfType<Card>())
-            {
-                card.FlipCard();
-            }
-            cardsFlipped = true;
+            card.FlipCard();
         }
 
         GD.Print("Player Start");

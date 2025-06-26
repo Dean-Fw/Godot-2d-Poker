@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using System;
 
 public static class ListExtensions
 {
@@ -9,25 +7,50 @@ public static class ListExtensions
         return input.IndexOf(current) + 1 >= input.Count ? input[0] : input[input.IndexOf(current) + 1];
     }
 
-    public static Player GetNextUnfoldedPlayer(this List<Player> Players, Player currentPlayer)
+    public static Player? GetNextUnfoldedPlayer(this List<Player> players, Player currentPlayer)
     {
-        // There should never be a case where every player has folded, this will also cause the below loop to be infinite
-        // In the case there is somehow throw this Exception
-        if (Players.Where(p => !p.Folded).Count() == 0)
-            throw new Exception("There cannot be a case where every player has folded");
+        var searchableList = CreateSearchableList(players, currentPlayer);
 
-        var indexOfCurrentPlayer = Players.IndexOf(currentPlayer);
-
-        // Get the next player in the list
-        var nextPlayer = Players.GetNext(currentPlayer);
-
-        // If the next player has not folded this should never start
-        while (nextPlayer.Folded)
+        foreach (var player in searchableList)
         {
-            // If the next player has folded, get the next player until we find one that has not folded
-            nextPlayer = Players.GetNext(nextPlayer);
+            if (!player.Folded)
+                return player;
         }
 
-        return nextPlayer;
+        return null;
+    }
+
+    public static Player? GetNextNonBustPlayer(this List<Player> players, Player currentPlayer)
+    {
+        var searchableList = CreateSearchableList(players, currentPlayer);
+
+        foreach (var player in searchableList)
+        {
+            if (player.ChipCount > 0)
+                return player;
+        }
+
+        return null;
+    }
+
+    private static List<Player> CreateSearchableList(List<Player> players, Player currentPlayer)
+    {
+        // I have 5 players and the current player is in position 1. 
+        // I want to search every player in the list to the right of the current for a non bust player
+        // Once I have searched all of the players to the right I will want to start from index 0 and search until I am back at the current players
+        //
+        // 1. Take the index of current player
+        // [0, 1, 2, 3, 4]
+        //     ^
+        var indexOfCurrentPlayer = players.IndexOf(currentPlayer);
+        // [0, 1, 2, 3, 4], [2, 3, 4]
+        // Take a slice of the current index to the end of list and then start to the index of player -1
+        var searchableList = players.Slice(indexOfCurrentPlayer + 1, players.Count - 1 - indexOfCurrentPlayer);
+        // [0, 1, 2, 3, 4], [2, 3, 4, 0]
+        // take all values to the left of the player and add them to the end of the new list
+        if (indexOfCurrentPlayer != 0)
+            searchableList.AddRange(players.Slice(0, indexOfCurrentPlayer));
+
+        return searchableList;
     }
 }

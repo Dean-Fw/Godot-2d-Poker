@@ -7,8 +7,14 @@ public partial class Dealer : Control
 
     private Deck deck = null!;
 
-    public override void _Ready()
+    public void ReadyDeck()
     {
+        if (deck != null)
+        {
+            deck.QueueFree();
+            deck = null!;
+        }
+
         deck = deckScene.Instantiate<Deck>();
         AddChild(deck);
     }
@@ -19,8 +25,10 @@ public partial class Dealer : Control
         {
             var card = GetCard();
 
-            if (target is HumanPlayer || target is CommunityCards)
+            if (target is CommunityCards)
+            {
                 card.FlipCard();
+            }
 
             target.AddChild(card);
         }

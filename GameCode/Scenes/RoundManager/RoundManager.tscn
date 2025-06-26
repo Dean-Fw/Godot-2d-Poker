@@ -1,15 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfk832s1exctq"]
+[gd_scene load_steps=6 format=3 uid="uid://bfk832s1exctq"]
 
 [ext_resource type="Script" uid="uid://ng1yttlqy0sb" path="res://Scenes/RoundManager/RoundManager.cs" id="1_kihim"]
 [ext_resource type="Script" uid="uid://2p2d3usaq47x" path="res://Scenes/RoundManager/Scripts/BlindsManager/BlindsManager.cs" id="2_rx0ry"]
 [ext_resource type="PackedScene" uid="uid://bupgvajwpypg2" path="res://Scenes/Dealer/Dealer.tscn" id="3_jjkx4"]
 [ext_resource type="Script" uid="uid://cuq31x1jy6dx1" path="res://Scenes/RoundManager/Scripts/BettingManager/BettingManager.cs" id="4_54fs3"]
+[ext_resource type="Script" uid="uid://c0gdn12m2q7w6" path="res://Scenes/RoundManager/Scripts/ShowDownManager/ShowDownManager.cs" id="5_bium4"]
 
-[node name="RoundManager" type="Node" node_paths=PackedStringArray("blindsManager", "dealer", "bettingManager")]
+[node name="RoundManager" type="Node" node_paths=PackedStringArray("blindsManager", "dealer", "bettingManager", "showDownManager")]
 script = ExtResource("1_kihim")
 blindsManager = NodePath("BlindsManager")
 dealer = NodePath("Dealer")
 bettingManager = NodePath("BettingManager")
+showDownManager = NodePath("ShowDownManager")
 
 [node name="BlindsManager" type="Node" parent="."]
 script = ExtResource("2_rx0ry")
@@ -19,3 +21,6 @@ visible = false
 
 [node name="BettingManager" type="Node" parent="."]
 script = ExtResource("4_54fs3")
+
+[node name="ShowDownManager" type="Node" parent="."]
+script = ExtResource("5_bium4")

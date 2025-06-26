@@ -16,69 +16,66 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_ovyus")
-actionsContainer = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/ActionsContainer")
-HandContainer = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/Hand")
-chipCounter = NodePath("PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips/ChipCount")
+actionsContainer = NodePath("ActionsContainer")
+HandContainer = NodePath("PlayerPanel/PlayerInformation/InformationMargin/Information/Hand")
+chipCounter = NodePath("PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips/ChipCount")
 betScene = ExtResource("3_wufwl")
-RoundInformation = NodePath("PlayerContainer/RoundInformation")
-BlindsLabel = NodePath("PlayerContainer/RoundInformation/Blind")
+RoundInformation = NodePath("RoundInformation")
+BlindsLabel = NodePath("RoundInformation/Blind")
 
-[node name="PlayerContainer" type="VBoxContainer" parent="."]
-layout_mode = 2
-
-[node name="RoundInformation" type="HBoxContainer" parent="PlayerContainer"]
+[node name="RoundInformation" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="Blind" type="Label" parent="PlayerContainer/RoundInformation"]
+[node name="Blind" type="Label" parent="RoundInformation"]
 layout_mode = 2
 
-[node name="PlayerPanel" type="PanelContainer" parent="PlayerContainer"]
+[node name="PlayerPanel" type="PanelContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 10
 
-[node name="PlayerInformation" type="VBoxContainer" parent="PlayerContainer/PlayerPanel"]
+[node name="PlayerInformation" type="VBoxContainer" parent="PlayerPanel"]
 layout_mode = 2
 
-[node name="InformationMargin" type="MarginContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation"]
+[node name="InformationMargin" type="MarginContainer" parent="PlayerPanel/PlayerInformation"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Information" type="HBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin"]
+[node name="Information" type="HBoxContainer" parent="PlayerPanel/PlayerInformation/InformationMargin"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 
-[node name="Hand" type="HBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information"]
+[node name="Hand" type="HBoxContainer" parent="PlayerPanel/PlayerInformation/InformationMargin/Information"]
 custom_minimum_size = Vector2(385, 0)
 layout_mode = 2
 
-[node name="ChipsMargin" type="MarginContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information"]
+[node name="ChipsMargin" type="MarginContainer" parent="PlayerPanel/PlayerInformation/InformationMargin/Information"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Chips" type="VBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin"]
+[node name="Chips" type="VBoxContainer" parent="PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin"]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="TextureRect" type="TextureRect" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips"]
+[node name="TextureRect" type="TextureRect" parent="PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 texture = ExtResource("2_ft8w5")
 expand_mode = 1
 
-[node name="ChipCount" type="Label" parent="PlayerContainer/PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips"]
+[node name="ChipCount" type="Label" parent="PlayerPanel/PlayerInformation/InformationMargin/Information/ChipsMargin/Chips"]
 layout_mode = 2
 text = "Chips: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ActionsContainer" type="VBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation" node_paths=PackedStringArray("callButton", "raiseButton", "raiseAmountSlider", "foldButton")]
+[node name="ActionsContainer" type="VBoxContainer" parent="." node_paths=PackedStringArray("callButton", "raiseButton", "raiseAmountSlider", "foldButton")]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 script = ExtResource("4_wufwl")
@@ -87,11 +84,11 @@ raiseButton = NodePath("BettingActions/RaiseContainer/Raise")
 raiseAmountSlider = NodePath("BettingActions/RaiseContainer/RaiseAmountSlider")
 foldButton = NodePath("Fold")
 
-[node name="BettingActions" type="HBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/ActionsContainer"]
+[node name="BettingActions" type="HBoxContainer" parent="ActionsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 
-[node name="Call" type="Button" parent="PlayerContainer/PlayerPanel/PlayerInformation/ActionsContainer/BettingActions"]
+[node name="Call" type="Button" parent="ActionsContainer/BettingActions"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -99,23 +96,23 @@ disabled = true
 text = "Call ()
 "
 
-[node name="RaiseContainer" type="VBoxContainer" parent="PlayerContainer/PlayerPanel/PlayerInformation/ActionsContainer/BettingActions"]
+[node name="RaiseContainer" type="VBoxContainer" parent="ActionsContainer/BettingActions"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Raise" type="Button" parent="PlayerContainer/PlayerPanel/PlayerInformation/ActionsContainer/BettingActions/RaiseContainer"]
+[node name="Raise" type="Button" parent="ActionsContainer/BettingActions/RaiseContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 disabled = true
 text = "Raise ()"
 
-[node name="RaiseAmountSlider" type="HSlider" parent="PlayerContainer/PlayerPanel/PlayerInformation/ActionsContainer/BettingActions/RaiseContainer"]
+[node name="RaiseAmountSlider" type="HSlider" parent="ActionsContainer/BettingActions/RaiseContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 rounded = true
 editable = false
 
-[node name="Fold" type="Button" parent="PlayerContainer/PlayerPanel/PlayerInformation/ActionsContainer"]
+[node name="Fold" type="Button" parent="ActionsContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 disabled = true

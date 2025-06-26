@@ -4,6 +4,7 @@ using System.Linq;
 
 public partial class BlindsManager : Node
 {
+
     public void SetBlinds(List<Player> players)
     {
         var dealer = players.FirstOrDefault(p => p.Blinds.Contains(Blind.Dealer));

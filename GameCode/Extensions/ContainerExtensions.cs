@@ -7,4 +7,12 @@ public static class ContainerExtensions
     {
         return container.GetChildren().ToList().Exists(c => c is T);
     }
+
+    public static void Clear(this Container container)
+    {
+        foreach (var child in container.GetChildren())
+        {
+            child.QueueFree();
+        }
+    }
 }
